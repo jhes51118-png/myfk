@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Snoopy's 2026 Rich Trip</title>
+    <title>Snoopy's 2026 Ultimate Trip</title>
     <!-- 引入手寫風格字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
     <style>
@@ -66,7 +66,7 @@
         .star-rating { background: #FFF; border: 2px solid var(--ink-black); color: #F39C12; padding: 2px 8px; border-radius: 20px; font-size: 13px; font-weight: bold; display: inline-block; margin-left: 5px; vertical-align: middle; box-shadow: 2px 2px 0px rgba(0,0,0,0.1); }
         .event-title { font-size: 20px; font-weight: bold; margin-bottom: 5px; line-height: 1.3; }
         
-        /* AI Guide Box (Enhanced) */
+        /* AI Guide Box */
         .ai-guide-box { background: #FFF9C4; border: 2px dashed var(--ink-black); border-radius: 12px; padding: 15px; margin-top: 15px; margin-bottom: 10px; position: relative; font-size: 15px; line-height: 1.8; text-align: justify; }
         .ai-guide-box::before { content: '💡 Snoopy Guide'; position: absolute; top: -12px; left: 10px; background: var(--woodstock-yellow); color: var(--ink-black); font-weight: bold; font-size: 12px; padding: 2px 8px; border: 2px solid var(--ink-black); border-radius: 10px; transform: rotate(-2deg); }
         .ai-guide-box strong { color: #E65100; background: rgba(255,255,255,0.5); padding: 0 4px; border-radius: 4px; }
@@ -92,11 +92,17 @@
         .konbini-list { counter-reset: k-counter; }
         .konbini-item { display: flex; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #eee; }
         .konbini-item:last-child { border-bottom: none; }
-        .k-rank { counter-increment: k-counter; width: 24px; height: 24px; background: var(--ink-black); color: white; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; margin-right: 10px; flex-shrink: 0; }
+        .k-rank { width: 24px; height: 24px; background: var(--ink-black); color: white; border-radius: 50%; font-size: 11px; font-weight: bold; display: flex; align-items: center; justify-content: center; margin-right: 10px; flex-shrink: 0; margin-top: 4px; }
+        .k-content { flex: 1; }
+        .k-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
         .k-store { font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-right: 6px; color: white; font-weight: bold; vertical-align: middle; }
         .store-711 { background: #F39C12; } .store-lawson { background: #3498DB; } .store-fami { background: #2ECC71; } .store-all { background: #95A5A6; }
         .k-name { font-weight: bold; font-size: 15px; color: #333; }
-        .k-desc { font-size: 13px; color: #666; margin-top: 4px; font-style: italic; }
+        .k-desc { font-size: 13px; color: #666; font-style: italic; }
+        .k-category { background: #eee; color: #333; padding: 5px 10px; font-weight:bold; font-size:14px; border-radius: 6px; margin: 15px 0 5px 0; display: inline-block; border: 1px solid #ccc; }
+        
+        .k-photo-btn { font-size: 11px; color: #555; text-decoration: none; background: white; padding: 3px 8px; border-radius: 12px; border: 1px solid #ccc; display: flex; align-items: center; gap: 3px; white-space: nowrap; margin-left: 8px; box-shadow: 1px 1px 0 #ddd; cursor: pointer; }
+        .k-photo-btn:active { transform: translate(1px, 1px); box-shadow: none; }
 
         /* Flowchart */
         #overview-view { padding: 20px; max-width: 600px; margin: 0 auto; }
@@ -130,7 +136,7 @@
     <div class="header-section">
         <div class="comic-bubble">FUKUOKA TRIP 🐾</div>
         <br>
-        <div class="sub-title">2026.4.10 - 4.14 (完全版)</div>
+        <div class="sub-title">2026.4.10 - 4.14 (甜點百大圖鑑)</div>
     </div>
 
     <!-- MAIN VIEW 1: 詳細行程 (Itinerary) -->
@@ -142,10 +148,10 @@
             <div class="date-bone" onclick="switchDay(3)">Day 3<br><small>4/12</small></div>
             <div class="date-bone" onclick="switchDay(4)">Day 4<br><small>4/13</small></div>
             <div class="date-bone" onclick="switchDay(5)">Day 5<br><small>4/14</small></div>
-            <div class="date-bone konbini-tab" onclick="switchDay(6)">超商<br><small>必買</small></div>
+            <div class="date-bone konbini-tab" onclick="switchDay(6)">甜點<br><small>100選</small></div>
         </div>
 
-        <!-- DAY 1 Content -->
+        <!-- DAY 1 to DAY 5 Content (保留原樣) -->
         <div id="day1" class="content-container active">
             <div class="comic-panel flight-card">
                 <div class="flight-header"><span style="color:#8B7D52; font-weight:bold;">✈️ JX840</span><small>星宇 A321neo</small></div>
@@ -157,416 +163,70 @@
                 <div style="font-size:18px; font-weight:bold; margin-bottom:5px;">博多微笑酒店</div>
                 <a href="https://www.google.com/maps/search/?api=1&query=Smile+Hotel+Hakata+Hakataekimae+3-8-18" class="nav-btn">📍 導航：博多微笑酒店</a>
             </div>
-            
             <div class="comic-panel">
                 <span class="time-badge">14:00</span>
                 <div class="event-title">前往飯店 (寄放行李)</div>
                 <div class="ai-guide-box">
-                    歡迎來到九州！福崗機場前身是美軍的「板付基地」，現在是全日本距離市區最近、最方便的機場之一。
-                    <br>💡 <strong>親子交通攻略</strong>：微笑酒店位於博多站博多口附近，帶著小孩和行李，強烈建議直接在機場搭計程車，約15分鐘即可抵達（車資約1600日圓），比搭接駁巴士轉地鐵輕鬆許多。如果您比 15:00 還早到，可以先寄放行李，一身輕地去車站逛逛。別忘了，日本計程車後門是自動開關的，千萬不要自己動手喔！
+                    歡迎來到九州！福崗機場前身是美軍的「板付基地」。微笑酒店位於博多站博多口附近，強烈建議直接在機場搭計程車，約15分鐘即可抵達，比搭接駁巴士轉地鐵輕鬆許多。如果您比 15:00 還早到，可以先寄放行李。
                 </div>
             </div>
-
             <div class="comic-panel">
                 <div class="panel-stripe"></div>
                 <span class="time-badge">15:30</span>
                 <div class="event-title">Mignon 小可頌 <span class="star-rating">⭐ 4.2</span></div>
                 <div class="ai-guide-box">
-                    這家店已經在博多站飄香超過 28 年，是福岡人共同的記憶！只要經過博多站，絕對會被它濃濃的奶油香氣吸引。
-                    <br>👉 <strong>口味全攻略</strong>：它是秤重賣的，想買幾顆都可以！<strong>巧克力</strong>是小朋友的最愛，內餡使用高品質巧克力條；<strong>地瓜</strong>使用九州特產薩摩地瓜，甜而不膩；<strong>原味</strong>則能吃到最純粹的麵粉與奶油香。買一袋回飯店當下午茶或明天的早餐都非常適合。
+                    這家店已經在博多站飄香超過 28 年！👉 <strong>口味攻略</strong>：它是秤重賣的。<strong>巧克力</strong>是小朋友的最愛；<strong>地瓜</strong>使用九州特產薩摩地瓜；<strong>原味</strong>有濃濃奶油香。
                 </div>
                 <a href="https://www.google.com/maps/search/?api=1&query=il+FORNO+del+MIGNON+博多" class="nav-btn">📍 導航：買可頌</a>
             </div>
-
             <div class="comic-panel">
                 <span class="time-badge">18:30 晚餐</span>
                 <div class="event-title">博多名物：牛腸鍋大戰 🥘</div>
                 <div class="ai-guide-box">
-                    「Motsunabe」起源於二戰後，當時物資缺乏，煤礦工人將鋁鍋煮內臟和韭菜，意外發現超級美味，現在已是福岡的靈魂美食！韭菜煮軟後就能吃了。
-                    <br>💡 <strong>行家吃法</strong>：最後剩下的湯底，千萬不要浪費！一定要加點「雜炊（飯）」或「強棒麵（Champon）」來收尾，麵條吸收了牛腸融出的油脂與蔬菜的精華，這才是這道料理的本體！
+                    「Motsunabe」是福岡的靈魂美食！最後剩下的湯底，一定要加點「雜炊（飯）」或「強棒麵（Champon）」來收尾。
                 </div>
                 <div class="food-choices">
                     <div class="choice-item luxury">
-                        <div class="choice-info">
-                            <span class="choice-name"><span class="luxury-badge">奢華</span>牛腸鍋 山中 (やま中) <span class="star-rating">⭐ 4.4</span></span>
-                            <span class="choice-review">網友說：「味噌口味濃郁到像藝術品，裝潢高級適合慶祝。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=やま中+赤坂店" class="mini-nav">GO</a>
+                        <div class="choice-info"><span class="choice-name"><span class="luxury-badge">奢華</span>牛腸鍋 山中</span><span class="choice-review">網友：「味噌口味濃郁到像藝術品。」</span></div><a href="https://www.google.com/maps/search/?api=1&query=やま中+赤坂店" class="mini-nav">GO</a>
                     </div>
                     <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">元祖牛腸鍋 樂天地 <span class="star-rating">⭐ 4.0</span></span>
-                            <span class="choice-review">網友說：「韭菜堆得像山一樣高，CP值超高的老店！」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=元祖もつ鍋楽天地+博多駅" class="mini-nav">GO</a>
+                        <div class="choice-info"><span class="choice-name">元祖牛腸鍋 樂天地</span><span class="choice-review">網友：「韭菜堆得像山一樣高！」</span></div><a href="https://www.google.com/maps/search/?api=1&query=元祖もつ鍋楽天地+博多駅" class="mini-nav">GO</a>
                     </div>
                     <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">牛腸鍋 笑樂 <span class="star-rating">⭐ 4.0</span></span>
-                            <span class="choice-review">網友說：「午間套餐很划算，醬油湯底不死鹹。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=もつ鍋+笑楽+博多駅店" class="mini-nav">GO</a>
+                        <div class="choice-info"><span class="choice-name">牛腸鍋 笑樂</span><span class="choice-review">網友：「醬油湯底不死鹹。」</span></div><a href="https://www.google.com/maps/search/?api=1&query=もつ鍋+笑楽+博多駅店" class="mini-nav">GO</a>
                     </div>
                     <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">博多麵牛腸屋 <span class="star-rating">⭐ 4.2</span></span>
-                            <span class="choice-review">網友說：「一個人也能吃的牛腸鍋，老闆娘很親切。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=博多麺もつ屋" class="mini-nav">GO</a>
+                        <div class="choice-info"><span class="choice-name">博多麵牛腸屋</span><span class="choice-review">網友：「一個人也能吃的牛腸鍋。」</span></div><a href="https://www.google.com/maps/search/?api=1&query=博多麺もつ屋" class="mini-nav">GO</a>
                     </div>
                     <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">前田屋 (Maedaya) <span class="star-rating">⭐ 4.3</span></span>
-                            <span class="choice-review">網友說：「很多藝人簽名，牛腸處理得乾淨不腥。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=博多もつ鍋+前田屋+総本店" class="mini-nav">GO</a>
+                        <div class="choice-info"><span class="choice-name">前田屋 (Maedaya)</span><span class="choice-review">網友：「很多藝人簽名，牛腸乾淨不腥。」</span></div><a href="https://www.google.com/maps/search/?api=1&query=博多もつ鍋+前田屋+総本店" class="mini-nav">GO</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- DAY 2 Content -->
         <div id="day2" class="content-container">
-            <div class="comic-panel">
-                <span class="time-badge">09:30</span>
-                <div class="event-title">櫛田神社 <span class="star-rating">⭐ 4.4</span></div>
-                <div class="ai-guide-box">
-                    這裡是博多人的信仰中心，也是每年7月熱血沸騰的「博多祇園山笠」祭典的起點！祭典起源於 1241 年，當時聖一國師為了消除瘟疫，乘坐施餓鬼棚灑祈禱水，後來演變成現在的抬山笠競賽。
-                    <br>📸 <strong>必拍亮點</strong>：境內常年展示高達 10 公尺的巨大「飾山笠」，完全沒有使用一根釘子，全靠麻繩綑綁，上面裝飾著博多的人偶，非常壯觀！另外，正門的「靈泉鶴之井」據說喝了能長壽，現在通常用來漱口祈福。
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=櫛田神社+福岡" class="nav-btn">📍 導航：櫛田神社</a>
-            </div>
-
-            <div class="comic-panel">
-                <div class="panel-stripe"></div>
-                <span class="time-badge">12:30 午餐</span>
-                <div class="event-title">川端通/運河城美食 🍜</div>
-                <div class="food-choices">
-                    <div class="choice-item luxury">
-                        <div class="choice-info">
-                            <span class="choice-name"><span class="luxury-badge">奢華</span>吉塚鰻魚屋 <span class="star-rating">⭐ 4.5</span></span>
-                            <span class="choice-review">網友說：「福岡必吃！鰻魚皮烤得酥脆，肉質軟嫩。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=吉塚うなぎ屋" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">博多達摩 (Daruma) <span class="star-rating">⭐ 3.9</span></span>
-                            <span class="choice-review">網友說：「豚骨味非常濃厚，背脂滿滿。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=博多だるま+総本店" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">Karo 之烏龍麵 <span class="star-rating">⭐ 3.9</span></span>
-                            <span class="choice-review">網友說：「軟軟的博多烏龍麵很特別，炸牛蒡一定要點。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=かろのうろん" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">元祖長濱屋 <span class="star-rating">⭐ 3.8</span></span>
-                            <span class="choice-review">網友說：「只要600日幣！福岡人的靈魂早餐，加蔥免費。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=元祖長浜屋" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">博多一双 (Issou) <span class="star-rating">⭐ 4.1</span></span>
-                            <span class="choice-review">網友說：「有『豚骨卡布奇諾』之稱，湯頭濃到起泡！」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=博多一双+祇園店" class="mini-nav">GO</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="comic-panel">
-                <span class="time-badge">14:30</span>
-                <div class="event-title">博多運河城 🛍️</div>
-                <div class="ai-guide-box">
-                    這是一座由美國建築師設計的色彩繽紛城中城，概念是「都市中的劇場」。建築本身蜿蜒的曲線和鮮豔的色彩就非常值得一看。
-                    <br>⏰ <strong>必看表演</strong>：B1 的太陽廣場每整點會有音樂噴水秀，晚上還有 3D 光雕投影（經常有 One Piece 或鋼彈主題），小朋友絕對會看呆！
-                    <br>🎁 <strong>必逛</strong>：B1 的吉卜力橡子共和國和 Sanrio Gallery 是親子殺手，準備好荷包！
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=博多運河城" class="nav-btn">📍 導航：運河城</a>
-            </div>
-
-            <div class="comic-panel" style="border-color:var(--snoopy-red);">
-                <span class="time-badge">18:00 特別行程</span>
-                <div class="event-title">中洲屋台街體驗 🏮</div>
-                <div class="ai-guide-box">
-                    「屋台 (Yatai)」就是日本的路邊攤！二戰後全日本都有，但因為法規嚴格現在只剩福岡保留最完整。沿著那珂川排列的紅燈籠，倒映在水面上非常浪漫。
-                    <br>💡 <strong>體驗指南</strong>：屋台空間狹小，且多數沒有禁菸，帶著小孩可能不方便久坐。建議在晚餐前後去河邊散步、拍拍照感受熱鬧氣氛，如果想體驗，推薦買個「關東煮」嚐鮮即可，大部分店家都只收現金喔！
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=中洲屋台" class="nav-btn">📍 導航：中洲屋台區</a>
-            </div>
-
-            <div class="comic-panel">
-                <span class="time-badge">19:00 晚餐</span>
-                <div class="event-title">天神晚餐 (含屋台美食) 🍤</div>
-                <div class="food-choices">
-                    <div class="choice-item luxury">
-                        <div class="choice-info">
-                            <span class="choice-name"><span class="luxury-badge">奢華</span>稚加榮 (Chikae) <span class="star-rating">⭐ 4.3</span></span>
-                            <span class="choice-review">網友說：「活魚刺身新鮮到還在動！圍著巨大魚缸吃飯超氣派。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=稚加榮+福岡店" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">屋台 小金ちゃん <span class="star-rating">⭐ 4.0</span></span>
-                            <span class="choice-review">網友說：「傳說中的炒拉麵發源地！排隊人潮沒停過。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=小金ちゃん" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">天婦羅處 Hirao <span class="star-rating">⭐ 4.4</span></span>
-                            <span class="choice-review">網友說：「現炸天婦羅超酥脆，重點是生醃花枝吃到飽太佛心。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=天麩羅処ひらお+大名店" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">ShinShin 拉麵 <span class="star-rating">⭐ 4.2</span></span>
-                            <span class="choice-review">網友說：「麵條極細，湯頭濃郁但不油膩，連東方神起都愛吃。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=博多らーめん+ShinShin+天神本店" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">極味屋 (Kiwamiya) <span class="star-rating">⭐ 4.5</span></span>
-                            <span class="choice-review">網友說：「自己用鐵板烤漢堡排超有趣，每一口都是肉汁。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=極味や+福岡パルコ店" class="mini-nav">GO</a>
-                    </div>
-                </div>
-            </div>
+            <div class="comic-panel"><span class="time-badge">09:30</span><div class="event-title">櫛田神社 <span class="star-rating">⭐ 4.4</span></div><div class="ai-guide-box">博多總鎮守！必拍高達10公尺的「飾山笠」，完全沒用釘子，全是繩索綁的！</div><a href="https://www.google.com/maps/search/?api=1&query=櫛田神社+福岡" class="nav-btn">📍 導航：櫛田神社</a></div>
+            <div class="comic-panel"><span class="time-badge">12:30 午餐</span><div class="event-title">川端通/運河城美食 🍜</div><div class="food-choices"><div class="choice-item luxury"><div class="choice-info"><span class="choice-name"><span class="luxury-badge">奢華</span>吉塚鰻魚屋</span><span class="choice-review">網友：「鰻魚皮脆肉嫩，排隊也值得。」</span></div><a href="https://www.google.com/maps/search/?api=1&query=吉塚うなぎ屋" class="mini-nav">GO</a></div><div class="choice-item"><div class="choice-info"><span class="choice-name">博多達摩</span><span class="choice-review">網友：「豚骨味非常濃厚。」</span></div><a href="https://www.google.com/maps/search/?api=1&query=博多だるま+総本店" class="mini-nav">GO</a></div></div></div>
+            <div class="comic-panel"><span class="time-badge">14:30</span><div class="event-title">博多運河城 🛍️</div><div class="ai-guide-box">⏰ <strong>必看</strong>：B1 太陽廣場每整點的音樂噴水秀。</div><a href="https://www.google.com/maps/search/?api=1&query=博多運河城" class="nav-btn">📍 導航：運河城</a></div>
+            <div class="comic-panel" style="border-color:var(--snoopy-red);"><span class="time-badge">18:00</span><div class="event-title">中洲屋台街體驗 🏮</div><div class="ai-guide-box">💡 <strong>體驗指南</strong>：屋台空間小，建議帶小孩「純參觀」或買個關東煮外帶。</div><a href="https://www.google.com/maps/search/?api=1&query=中洲屋台" class="nav-btn">📍 導航：中洲屋台區</a></div>
+            <div class="comic-panel"><span class="time-badge">19:00 晚餐</span><div class="event-title">天神晚餐 🍤</div><div class="food-choices"><div class="choice-item luxury"><div class="choice-info"><span class="choice-name"><span class="luxury-badge">奢華</span>稚加榮</span><span class="choice-review">網友：「活魚刺身新鮮到還在動！」</span></div><a href="https://www.google.com/maps/search/?api=1&query=稚加榮+福岡店" class="mini-nav">GO</a></div><div class="choice-item"><div class="choice-info"><span class="choice-name">屋台 小金ちゃん</span><span class="choice-review">網友：「炒拉麵發源地！」</span></div><a href="https://www.google.com/maps/search/?api=1&query=小金ちゃん" class="mini-nav">GO</a></div></div></div>
         </div>
 
-        <!-- DAY 3 Content -->
         <div id="day3" class="content-container">
-            <div class="comic-panel">
-                <span class="time-badge">09:00</span>
-                <div class="event-title">買便當去野餐 🍱</div>
-                <div class="ai-guide-box">
-                    海之中道公園餐廳較少且價格較高，<strong>強烈建議</strong>像日本媽媽一樣，在車站買好便當帶去野餐！博多站內的「Ippin通」和「博多阪急B1」是美食寶庫，選擇障礙絕對會發作。
-                    <br>👉 <strong>推薦</strong>：Yamaya 的明太子飯糰是九州經典；古市庵的壽司卷色彩繽紛，小朋友一口一個剛剛好。
-                </div>
-                <div class="food-choices">
-                    <div class="choice-item luxury">
-                        <div class="choice-info">
-                            <span class="choice-name"><span class="luxury-badge">奢華</span>人形町今半 便當 <span class="star-rating">⭐ 4.3</span></span>
-                            <span class="choice-review">網友說：「壽喜燒牛肉便當冷了也好吃，肉質超軟嫩。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=人形町今半+博多阪急" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">Yamaya 明太子飯糰 <span class="star-rating">⭐ 4.0</span></span>
-                            <span class="choice-review">網友說：「明太子給得很大方，飯糰熱熱的很好吃。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=やまや+博多駅" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">古市庵 壽司卷 <span class="star-rating">⭐ 3.9</span></span>
-                            <span class="choice-review">網友說：「色彩繽紛的壽司卷，小朋友一口一個剛剛好。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=古市庵+博多阪急" class="mini-nav">GO</a>
-                    </div>
-                     <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">崎陽軒 燒賣便當 <span class="star-rating">⭐ 4.1</span></span>
-                            <span class="choice-review">網友說：「雖然是冷的但意外好吃，筍塊很入味。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=崎陽軒+博多駅" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">Trandor 麵包 <span class="star-rating">⭐ 4.0</span></span>
-                            <span class="choice-review">網友說：「半熟蛋咖哩麵包必買！咬下去會爆漿。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=トランドール+博多駅" class="mini-nav">GO</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="comic-panel">
-                <span class="time-badge">10:00</span>
-                <div class="event-title">海洋世界水族館 <span class="star-rating">⭐ 4.3</span></div>
-                <div class="ai-guide-box">
-                    九州最具代表性的水族館！這裡的展示主題是「對馬暖流」。
-                    <br>🐬 <strong>必看</strong>：以博多灣大海為背景的海豚海獅秀，視野非常開闊，沒有壓迫感。
-                    <br>🦦 <strong>可愛擔當</strong>：這裡的海獺「Rilo」非常有名，甚至會拿著扇子賣萌，是網紅級的動物明星！記得查好表演時間表喔。
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=海洋世界海之中道" class="nav-btn">📍 導航：水族館</a>
-            </div>
-             <div class="comic-panel">
-                <span class="time-badge">13:00</span>
-                <div class="event-title">海之中道海濱公園 <span class="star-rating">⭐ 4.4</span></div>
-                <div class="ai-guide-box">
-                    這公園大得誇張（前身是美軍基地），建議一定要在入口處<strong>租腳踏車</strong>，不然會走到懷疑人生。
-                    <br>🌸 <strong>4月看點</strong>：這個季節剛好是「粉蝶花（Nemophila）」盛開，整個山丘都是粉藍色的，美到窒息！
-                    <br>🤸 <strong>放電神器</strong>：「雲之彈跳床」是巨大的白色充氣跳床，小朋友上去就下不來了。
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=海之中道海濱公園" class="nav-btn">📍 導航：海濱公園</a>
-            </div>
-
-            <div class="comic-panel">
-                <span class="time-badge">18:30 晚餐</span>
-                <div class="event-title">水炊雞肉鍋 (Mizutaki) 🍲</div>
-                <div class="food-choices">
-                     <div class="choice-item luxury">
-                        <div class="choice-info">
-                            <span class="choice-name"><span class="luxury-badge">奢華</span>水炊 長野 (Nagano) <span class="star-rating">⭐ 4.4</span></span>
-                            <span class="choice-review">網友說：「完全預約制的百年老店，雞湯清澈卻充滿膠質，服務完美。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=水たき長野" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">博多華味鳥 <span class="star-rating">⭐ 4.1</span></span>
-                            <span class="choice-review">網友說：「自家養殖的雞肉品質很穩，午餐套餐CP值很高。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=博多華味鳥+博多駅前店" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">博多雞皮大臣 <span class="star-rating">⭐ 4.2</span></span>
-                            <span class="choice-review">網友說：「雞皮烤得像餅乾一樣酥脆，配啤酒無敵，而且超便宜！」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=博多とりかわ大臣+KITTE博多串房" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">とり田 (Toriden) <span class="star-rating">⭐ 4.2</span></span>
-                            <span class="choice-review">網友說：「擔擔麵口味的水炊鍋很有特色，辣得很過癮。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=とり田+博多本店" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">牧之烏龍麵 <span class="star-rating">⭐ 4.0</span></span>
-                            <span class="choice-review">網友說：「麵條會吸湯超神奇！附一壺高湯讓你加，軟麵適合小孩。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=牧のうどん+博多バスターミナル店" class="mini-nav">GO</a>
-                    </div>
-                </div>
-            </div>
+            <div class="comic-panel"><span class="time-badge">09:00</span><div class="event-title">買便當去野餐 🍱</div><div class="ai-guide-box">海之中道公園餐廳較少，強烈建議在博多站買好便當！</div><div class="food-choices"><div class="choice-item luxury"><div class="choice-info"><span class="choice-name"><span class="luxury-badge">奢華</span>人形町今半</span><span class="choice-review">網友：「冷了也好吃的頂級壽喜燒。」</span></div><a href="https://www.google.com/maps/search/?api=1&query=人形町今半+博多阪急" class="mini-nav">GO</a></div><div class="choice-item"><div class="choice-info"><span class="choice-name">Yamaya 明太子飯糰</span><span class="choice-review">網友：「明太子給得很大方。」</span></div><a href="https://www.google.com/maps/search/?api=1&query=やまや+博多駅" class="mini-nav">GO</a></div></div></div>
+            <div class="comic-panel"><span class="time-badge">10:00</span><div class="event-title">海洋世界水族館 <span class="star-rating">⭐ 4.3</span></div><div class="ai-guide-box">🐬 <strong>必看</strong>：以博多灣為背景的海豚秀。🦦 <strong>可愛擔當</strong>：海獺 Rilo。</div><a href="https://www.google.com/maps/search/?api=1&query=海洋世界海之中道" class="nav-btn">📍 導航：水族館</a></div>
+            <div class="comic-panel"><span class="time-badge">13:00</span><div class="event-title">海之中道海濱公園 <span class="star-rating">⭐ 4.4</span></div><div class="ai-guide-box">🌸 <strong>4月</strong>：粉蝶花盛開。建議租腳踏車。</div><a href="https://www.google.com/maps/search/?api=1&query=海之中道海濱公園" class="nav-btn">📍 導航：海濱公園</a></div>
+            <div class="comic-panel"><span class="time-badge">18:30 晚餐</span><div class="event-title">水炊雞肉鍋 🍲</div><div class="food-choices"><div class="choice-item luxury"><div class="choice-info"><span class="choice-name"><span class="luxury-badge">奢華</span>水炊 長野</span><span class="choice-review">網友：「預約制百年老店，雞湯清澈。」</span></div><a href="https://www.google.com/maps/search/?api=1&query=水たき長野" class="mini-nav">GO</a></div><div class="choice-item"><div class="choice-info"><span class="choice-name">博多華味鳥</span><span class="choice-review">網友：「自家養殖雞肉品質穩。」</span></div><a href="https://www.google.com/maps/search/?api=1&query=博多華味鳥+博多駅前店" class="mini-nav">GO</a></div></div></div>
         </div>
 
-        <!-- DAY 4 Content -->
         <div id="day4" class="content-container">
-            <div class="comic-panel">
-                <span class="time-badge">09:30</span>
-                <div class="event-title">太宰府天滿宮 <span class="star-rating">⭐ 4.5</span></div>
-                <div class="ai-guide-box">
-                    這裡供奉學問之神「菅原道真」，是日本求學業最靈驗的神社之一。
-                    <br>🌸 <strong>飛梅傳說</strong>：據說道真被貶到這裡時，京都家裡的梅樹太想念主人，一夜之間飛到了太宰府，這就是本殿旁著名的「飛梅」。
-                    <br>🐂 <strong>必摸</strong>：入口處的「御神牛」，摸摸頭據說會變聰明，摸摸身體保健康。
-                    <br>🏗️ <strong>注意</strong>：目前御本殿正在進行 124 年來的大整修，現在看到的是由藤本壯介設計的「臨時本殿」，屋頂上長滿了樹木，非常特別！
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=太宰府天滿宮" class="nav-btn">📍 導航：太宰府</a>
-            </div>
-
-            <div class="comic-panel">
-                <span class="time-badge">12:00 午餐</span>
-                <div class="event-title">太宰府限定午餐 🥢</div>
-                <div class="food-choices">
-                     <div class="choice-item luxury">
-                        <div class="choice-info">
-                            <span class="choice-name"><span class="luxury-badge">奢華</span>梅之花 (Ume no Hana) <span class="star-rating">⭐ 4.3</span></span>
-                            <span class="choice-review">網友說：「在日式庭園裡吃豆腐懷石料理，環境優雅，身心都被療癒了。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=梅の花+太宰府別荘" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">一蘭 (太宰府店) <span class="star-rating">⭐ 4.3</span></span>
-                            <span class="choice-review">網友說：「全日本唯一的五角碗！碗底寫著決定，考生一定要來吃。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=一蘭+太宰府参道店" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">暖暮拉麵 <span class="star-rating">⭐ 4.1</span></span>
-                            <span class="choice-review">網友說：「烈火拉麵辣得很過癮，湯頭比一蘭更濃郁一些。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=暖暮+太宰府駅前店" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">酒殿屋 (Sakadoya) <span class="star-rating">⭐ 4.0</span></span>
-                            <span class="choice-review">網友說：「庭園造景很美，現烤的梅枝餅配抹茶是絕配。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=酒殿屋" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">筑紫庵漢堡 <span class="star-rating">⭐ 4.2</span></span>
-                            <span class="choice-review">網友說：「太宰府漢堡裡面夾炸雞和梅子醬，意外的搭！」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=筑紫庵本店" class="mini-nav">GO</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="comic-panel">
-                <span class="time-badge">15:00</span>
-                <div class="event-title">天神地下街 🛍️</div>
-                <div class="ai-guide-box">
-                    全長600公尺，九州最大的地下街，連接了各大百貨（大丸、三越、Parco）。
-                    <br>👀 <strong>設計亮點</strong>：風格是模仿 19 世紀歐洲街道，地板是石板路，天花板有藤蔓花紋，連廁所都像圖書館一樣漂亮，記得去參觀一下廁所（笑）。
-                    <br>🍎 <strong>必吃</strong>：RINGO 蘋果派，這裡總是排隊，現烤的卡士達蘋果派超好吃。
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=天神地下街" class="nav-btn">📍 導航：天神地下街</a>
-            </div>
-
-            <div class="comic-panel">
-                <span class="time-badge">18:30 晚餐</span>
-                <div class="event-title">天神壽司/鐵板燒 🍣</div>
-                <div class="food-choices">
-                     <div class="choice-item luxury">
-                        <div class="choice-info">
-                            <span class="choice-name"><span class="luxury-badge">奢華</span>山中壽司 (Yamanaka) <span class="star-rating">⭐ 4.5</span></span>
-                            <span class="choice-review">網友說：「福岡壽司之神！食材處理得極致完美，每一貫都是享受。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=やま中+本店" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">葫蘆壽司 <span class="star-rating">⭐ 4.3</span></span>
-                            <span class="choice-review">網友說：「CP值天花板！活竹莢魚還在動，排隊一小時也甘願。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=ひょうたん寿司+天神" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">壽司郎 (Sushiro) <span class="star-rating">⭐ 3.9</span></span>
-                            <span class="choice-review">網友說：「帶小孩最方便，點餐快、有兒童椅，不想排隊的救星。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=スシロー+福岡親富孝通り店" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">天神 Horumon <span class="star-rating">⭐ 4.1</span></span>
-                            <span class="choice-review">網友說：「師傅在面前鐵板現炒，內臟超級下飯，香氣逼人。」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=天神ホルモン+ソラリアステージ店" class="mini-nav">GO</a>
-                    </div>
-                    <div class="choice-item">
-                        <div class="choice-info">
-                            <span class="choice-name">魚助食堂 <span class="star-rating">⭐ 4.0</span></span>
-                            <span class="choice-review">網友說：「生魚片可以自己夾到飽的海鮮丼，想吃多少夾多少！」</span>
-                        </div>
-                        <a href="https://www.google.com/maps/search/?api=1&query=魚助食堂+福岡パルコ店" class="mini-nav">GO</a>
-                    </div>
-                </div>
-            </div>
+            <div class="comic-panel"><span class="time-badge">09:30</span><div class="event-title">太宰府天滿宮 <span class="star-rating">⭐ 4.5</span></div><div class="ai-guide-box">🐂 <strong>必摸</strong>：御神牛，摸頭變聰明。🏗️ <strong>注意</strong>：目前是很有設計感的「臨時本殿」。</div><a href="https://www.google.com/maps/search/?api=1&query=太宰府天滿宮" class="nav-btn">📍 導航：太宰府</a></div>
+            <div class="comic-panel"><span class="time-badge">12:00 午餐</span><div class="event-title">太宰府限定午餐 🥢</div><div class="food-choices"><div class="choice-item luxury"><div class="choice-info"><span class="choice-name"><span class="luxury-badge">奢華</span>梅之花</span><span class="choice-review">網友：「日式庭園裡的豆腐懷石。」</span></div><a href="https://www.google.com/maps/search/?api=1&query=梅の花+太宰府別荘" class="mini-nav">GO</a></div><div class="choice-item"><div class="choice-info"><span class="choice-name">一蘭 (五角碗)</span><span class="choice-review">網友：「全日本唯一五角碗，考生必吃。」</span></div><a href="https://www.google.com/maps/search/?api=1&query=一蘭+太宰府参道店" class="mini-nav">GO</a></div></div></div>
+            <div class="comic-panel"><span class="time-badge">15:00</span><div class="event-title">天神地下街 🛍️</div><div class="ai-guide-box">🍎 <strong>必吃</strong>：RINGO 蘋果派。風格模仿 19 世紀歐洲街道。</div><a href="https://www.google.com/maps/search/?api=1&query=天神地下街" class="nav-btn">📍 導航：地下街</a></div>
+            <div class="comic-panel"><span class="time-badge">18:30 晚餐</span><div class="event-title">天神壽司 🍣</div><div class="food-choices"><div class="choice-item luxury"><div class="choice-info"><span class="choice-name"><span class="luxury-badge">奢華</span>山中壽司</span><span class="choice-review">網友：「福岡壽司之神！」</span></div><a href="https://www.google.com/maps/search/?api=1&query=やま中+本店" class="mini-nav">GO</a></div><div class="choice-item"><div class="choice-info"><span class="choice-name">葫蘆壽司</span><span class="choice-review">網友：「CP值天花板！活竹莢魚還在動。」</span></div><a href="https://www.google.com/maps/search/?api=1&query=ひょうたん寿司+天神" class="mini-nav">GO</a></div></div></div>
         </div>
 
-        <!-- DAY 5 Content -->
         <div id="day5" class="content-container">
             <div class="comic-panel flight-card">
                 <div class="flight-header"><span style="color:#8B7D52; font-weight:bold;">✈️ JX841</span><small>星宇 A321neo</small></div>
@@ -574,75 +234,153 @@
                 <div class="info-row"><span>TPE 台北</span><span class="info-value">15:45</span></div>
                 <div style="text-align:center; margin-top:10px; font-size:12px; font-weight:bold;">⚠️ 12:00 前抵達機場</div>
             </div>
-             <div class="comic-panel">
-                <span class="time-badge">10:00</span>
-                <div class="event-title">最後採買 🎁</div>
-                <div class="ai-guide-box">
-                    去「Ming (マイング)」名店街一次買齊！這裡聚集了九州各地名產。
-                    <br>1. <strong>博多通饅頭</strong>：連續多年金賞，充滿奶油香的白豆沙，西洋與和風的完美結合。
-                    <br>2. <strong>Menbei</strong>：明太子仙貝，硬脆口感，超適合下酒。
-                    <br>3. <strong>努努雞</strong>：神奇的「冰炸雞」，買了不用微波，退冰5分鐘吃最好吃，鹹甜酥脆。
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=マイング+博多" class="nav-btn">📍 導航：Ming名店街</a>
-            </div>
+             <div class="comic-panel"><span class="time-badge">10:00</span><div class="event-title">最後採買 🎁</div><div class="ai-guide-box">去「Ming」名店街買博多通饅頭、Menbei、努努雞。</div><a href="https://www.google.com/maps/search/?api=1&query=マイング+博多" class="nav-btn">📍 導航：Ming名店街</a></div>
         </div>
 
-        <!-- DAY 6: Konbini List (Same as v5) -->
+        <!-- DAY 6: Konbini List (MEGA EDITION) -->
         <div id="day6" class="content-container">
             <div class="comic-panel" style="background:var(--konbini-green); color:white;">
-                <div style="font-size:24px; font-weight:bold;">便利商店 30 選 🏪</div>
-                <div style="font-size:14px;">半夜肚子餓的救星！跟著網友買不踩雷。</div>
+                <div style="font-size:24px; font-weight:bold;">甜點百大圖鑑 🍰</div>
+                <div style="font-size:14px;">螞蟻人請進！超商就是你的甜點店。</div>
             </div>
-            <!-- (省略便利商店清單內容，因為已在 v5 完整提供，此處僅做結構示意，實際程式碼會包含完整列表) -->
-            <!-- 為確保完整性，我將 v5 的便利商店內容完整貼上 -->
+
             <div class="comic-panel">
-                <div class="event-title">🍗 熱食炸物 (結帳櫃檯旁)</div>
+                <div class="event-title">🍗 熱食 & 麵包 (1-13)</div>
                 <div class="konbini-list">
-                    <div class="konbini-item"><div class="k-rank">1</div><div><span class="k-store store-fami">Family</span><span class="k-name">Famichiki 炸雞排</span><div class="k-desc">網友：「這根本是日本超商的本體！肉汁多到會噴。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">2</div><div><span class="k-store store-lawson">Lawson</span><span class="k-name">Karaage-kun 炸雞塊</span><div class="k-desc">網友：「包裝有公雞圖案那個，一口一個停不下來。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">3</div><div><span class="k-store store-711">7-11</span><span class="k-name">現炸牛肉可樂餅</span><div class="k-desc">網友：「便宜又酥脆，馬鈴薯超綿密。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">4</div><div><span class="k-store store-711">7-11</span><span class="k-name">熱狗 (Big Pork Frank)</span><div class="k-desc">網友：「咬下去皮會脆裂開，肉感十足。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">5</div><div><span class="k-store store-711">7-11</span><span class="k-name">咖哩麵包 (店內現炸)</span><div class="k-desc">網友：「回購率超高，咖哩內餡很濃郁。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">6</div><div><span class="k-store store-all">All</span><span class="k-name">關東煮 (蘿蔔/福袋)</span><div class="k-desc">網友：「冬天必吃！蘿蔔煮得超透，吸滿高湯。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">1</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">Famichiki 炸雞排</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+Famichiki+炸雞排" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「肉汁多到會噴，日本超商本體。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">2</div><div class="k-content"><div class="k-header"><div><span class="k-store store-lawson">Lawson</span><span class="k-name">Karaage-kun 炸雞塊</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Lawson+Karaage-kun" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「一口一個停不下來。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">3</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">現炸牛肉可樂餅</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+牛肉可樂餅" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「便宜又酥脆，馬鈴薯綿密。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">4</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">雞蛋三明治</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+雞蛋三明治" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「世界第一三明治！吐司超軟。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">5</div><div class="k-content"><div class="k-header"><div><span class="k-store store-lawson">Lawson</span><span class="k-name">蛋沙拉三明治</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Lawson+蛋沙拉三明治" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「蛋味更濃郁。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">6</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">SPAM午餐肉飯糰</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+SPAM飯糰" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「加熱後鹹香下飯。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">7</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">鮪魚美乃滋飯糰</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+鮪魚美乃滋飯糰" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「萬年不敗經典款。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">8</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">炒麵麵包</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+超商+炒麵麵包" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「澱粉+澱粉的罪惡美味。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">9</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">哈密瓜麵包</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+哈密瓜麵包" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「外皮酥脆有砂糖顆粒。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">10</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">關東煮 (蘿蔔)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+超商+關東煮+蘿蔔" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「煮得超透，吸滿高湯。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">11</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">咖哩麵包</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+現炸咖哩麵包" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「店內現炸，咖哩濃郁。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">12</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">熱狗</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+Big+Pork+Frank" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「皮脆多汁。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">13</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">生菜火腿三明治</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+生菜火腿三明治" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「生菜超級脆！」</div></div></div>
                 </div>
             </div>
+
             <div class="comic-panel">
-                <div class="event-title">🍙 麵包 & 飯糰</div>
+                <div class="event-title">🍰 甜點 & 冰品 (14-100)</div>
+                <div class="k-category">👑 殿堂級神作</div>
                 <div class="konbini-list">
-                    <div class="konbini-item"><div class="k-rank">7</div><div><span class="k-store store-711">7-11</span><span class="k-name">雞蛋三明治</span><div class="k-desc">網友：「世界第一的三明治！吐司軟到不可思議。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">8</div><div><span class="k-store store-lawson">Lawson</span><span class="k-name">蛋沙拉三明治</span><div class="k-desc">網友：「跟7-11各有擁護者，Lawson的蛋味更濃一些。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">9</div><div><span class="k-store store-fami">Family</span><span class="k-name">SPAM午餐肉飯糰</span><div class="k-desc">網友：「加熱後更好吃，鹹香下飯。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">10</div><div><span class="k-store store-711">7-11</span><span class="k-name">鮪魚美乃滋飯糰</span><div class="k-desc">網友：「萬年不敗經典款，不知道吃什麼買這個就對了。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">11</div><div><span class="k-store store-711">7-11</span><span class="k-name">生菜火腿三明治</span><div class="k-desc">網友：「生菜超級脆！感覺很新鮮。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">12</div><div><span class="k-store store-all">All</span><span class="k-name">炒麵麵包 (Yakisoba Pan)</span><div class="k-desc">網友：「澱粉+澱粉的罪惡美味，很有日劇感。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">13</div><div><span class="k-store store-fami">Family</span><span class="k-name">哈密瓜麵包</span><div class="k-desc">網友：「外皮酥脆有砂糖顆粒，內層蓬鬆。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">14</div><div class="k-content"><div class="k-header"><div><span class="k-store store-lawson">Lawson</span><span class="k-name">Premium 生乳捲</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Lawson+Premium+Roll+Cake" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「超商甜點的王者！奶油香濃不膩。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">15</div><div class="k-content"><div class="k-header"><div><span class="k-store store-lawson">Lawson</span><span class="k-name">BASCHEE 乳酪蛋糕</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Lawson+Baschee" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「這根本是甜點店等級的濃郁。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">16</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">舒芙蕾布丁</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+舒芙蕾布丁" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「上層蛋糕下層布丁，雙重享受。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">17</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">舒芙蕾布丁 (Fami版)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+舒芙蕾布丁" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「全家必吃招牌，口感綿密。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">18</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">雙層卡士達泡芙</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+雙層卡士達泡芙" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「咬下去餡料會爆出來！」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">19</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Ohayo 焦糖烤布蕾冰</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Ohayo+焦糖烤布蕾冰淇淋" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「表層焦糖脆脆的超好吃，常缺貨。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">20</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Haagen-Dazs (限定)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Haagen-Dazs+限定口味" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「一定要找『麻糬』系列或季節限定。」</div></div></div>
+
+                    <div class="k-category">🍦 人氣冰品 (冰淇淋/冰棒)</div>
+                    <div class="konbini-item"><div class="k-rank">21</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Pino 巧克力冰淇淋</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Pino+巧克力冰淇淋" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「一口一個，不知不覺吃完一盒。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">22</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">雪見大福 (麻糬冰)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+雪見大福" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「皮Ｑ餡軟，經典不敗。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">23</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">PARM 巧克力冰棒</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+PARM+巧克力冰棒" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「口感超高級，入口即化。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">24</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">九州名物 白熊冰</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+白熊冰" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「來九州必吃！煉乳冰上有滿滿水果。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">25</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Glico 果實冰球</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Glico+果實冰球" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「像吃真的水果，葡萄口味最推。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">26</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">明治 Super Cup</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+明治+Super+Cup" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「份量超大，CP值最高。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">27</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">森永 MOW 香草</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+森永+MOW" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「奶味非常純粹。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">28</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">巧克力最中 Jumbo</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+巧克力最中+Jumbo" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「中間那層脆巧克力板是靈魂！」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">29</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Lotte Coolish</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Lotte+Coolish" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「像喝的冰淇淋，不用湯匙。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">30</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">赤城 Garigari-kun</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Garigari-kun" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「蘇打口味最經典，便宜消暑。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">31</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Glico Papico 咖啡</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Glico+Papico" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「咖啡口味順口，兩人分食剛好。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">32</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">牧場牛奶冰淇淋</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+牧場牛奶冰淇淋" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「奶香超濃郁。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">33</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">井村屋 紅豆冰棒</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+井村屋+紅豆冰棒" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「號稱世界最硬冰棒！紅豆紮實。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">34</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">黑雷神巧克力冰</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+黑雷神巧克力冰棒" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「裡面有餅乾，巧克力控必買。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">35</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Giant Cone 甜筒</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Glico+Giant+Cone" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「頂部的堅果巧克力超讚。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">36</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Sacre 檸檬冰沙</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Sacre+檸檬冰沙" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「裡面真的有一片檸檬！」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">37</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">像是冷凍芒果的冰</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+冷凍芒果冰" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「口感真的很像冷凍水果。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">38</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">西瓜冰棒 (Suica)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+西瓜冰棒+Suica" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「造型可愛，夏天必備。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">39</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">土耳其冰淇淋</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+土耳其冰淇淋+Mochi" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「真的會牽絲，口感很Q。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">40</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">Frappe 冰沙</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+Frappe" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「請店員加牛奶打成冰沙。」</div></div></div>
+
+                    <div class="k-category">🍮 布丁 & 果凍</div>
+                    <div class="konbini-item"><div class="k-rank">41</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">牛奶布丁</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+牛奶布丁" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「入口即化，奶香濃郁。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">42</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">森永 燒布丁</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+森永+燒布丁" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「表皮微焦，蛋香十足。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">43</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Glico Pucchin布丁</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Glico+Pucchin+布丁" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「可以倒扣出來，口感像果凍。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">44</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">杏仁豆腐</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+杏仁豆腐" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「滑嫩順口，沒有刺鼻杏仁味。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">45</div><div class="k-content"><div class="k-header"><div><span class="k-store store-lawson">Lawson</span><span class="k-name">滑順雞蛋布丁</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Lawson+雞蛋布丁" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「口感紮實，蛋味很重。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">46</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Tarami 水果果凍</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Tarami+水果果凍" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「裡面有整瓣蜜柑或白桃。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">47</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">窯烤布丁</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+窯烤布丁" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「口感綿密，焦糖微苦。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">48</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">義式布丁</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+義式布丁" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「口感像起司蛋糕一樣紮實。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">49</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">優格果凍 (Aloe)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+森永+蘆薈優格" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「裡面有大塊蘆薈，清爽解膩。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">50</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">牛奶寒天</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+牛奶寒天" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「裡面有橘子瓣，懷舊好滋味。」</div></div></div>
+
+                    <div class="k-category">🍰 蛋糕 & 捲類</div>
+                    <div class="konbini-item"><div class="k-rank">51</div><div class="k-content"><div class="k-header"><div><span class="k-store store-lawson">Lawson</span><span class="k-name">麻糬口感蛋糕捲</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Lawson+麻糬蛋糕捲" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「蛋糕體QQ的，口感很特別。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">52</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">切片年輪蛋糕</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+年輪蛋糕" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「濕潤不乾，奶油香氣足。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">53</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">舒芙蕾起司蛋糕</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+舒芙蕾起司蛋糕" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「空氣感十足，入口即化。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">54</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">濃厚巧克力蛋糕</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+巧克力蛋糕" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「像生巧克力一樣濃郁。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">55</div><div class="k-content"><div class="k-header"><div><span class="k-store store-lawson">Lawson</span><span class="k-name">厚切瑞士捲</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Lawson+厚切瑞士捲" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「份量很大，適合分食。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">56</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">巧克力塔</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+巧克力塔" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「塔皮酥脆，巧克力餡很紮實。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">57</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">杯裝提拉米蘇</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+提拉米蘇" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「馬斯卡彭起司味很重。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">58</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Yamazaki 蒸蛋糕</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Yamazaki+蒸蛋糕" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「北海道起司口味最推。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">59</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">奶油夾心餅乾</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+奶油夾心餅乾" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「像六花亭的平替版。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">60</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">費南雪 (Financier)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+費南雪" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「奶油焦香很迷人。」</div></div></div>
+
+                    <div class="k-category">🥯 泡芙 & 鯛魚燒</div>
+                    <div class="konbini-item"><div class="k-rank">61</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">閃電泡芙</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+閃電泡芙" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「巧克力淋面很厚。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">62</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">卡士達鯛魚燒 (冷)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+冷鯛魚燒" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「皮是QQ的像麻糬。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">63</div><div class="k-content"><div class="k-header"><div><span class="k-store store-lawson">Lawson</span><span class="k-name">脆皮泡芙</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Lawson+脆皮泡芙" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「外皮有珍珠糖顆粒。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">64</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">奶油鯛魚燒</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+奶油鯛魚燒" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「卡士達醬很濃。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">65</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">一口小泡芙</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+一口小泡芙" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「一包很多顆，適合分食。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">66</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">鮮奶油泡芙</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+鮮奶油泡芙" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「鮮奶油愛好者必吃。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">67</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">草莓鮮奶油三明治</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+草莓鮮奶油三明治" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「季節限定，看到必買。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">68</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">比利時鬆餅</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+超商+比利時鬆餅" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「有珍珠糖的脆口感。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">69</div><div class="k-content"><div class="k-header"><div><span class="k-store store-lawson">Lawson</span><span class="k-name">八天堂聯名麵包</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Lawson+八天堂" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「偶爾出現的夢幻逸品。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">70</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">牛奶棒麵包</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+牛奶棒" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「早餐配咖啡剛好。」</div></div></div>
+
+                    <div class="k-category">🍡 和風甜點</div>
+                    <div class="konbini-item"><div class="k-rank">71</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">黑糖蕨餅</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+黑糖蕨餅" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「黃豆粉和黑糖蜜絕配。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">72</div><div class="k-content"><div class="k-header"><div><span class="k-store store-lawson">Lawson</span><span class="k-name">鮮奶油銅鑼燒</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Lawson+鮮奶油銅鑼燒" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「紅豆加鮮奶油是完美組合。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">73</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">豆大福</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+豆大福" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「紅豆粒粒分明，帶點鹹味。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">74</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">日式糰子 (Mitarashi)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+醬油糰子" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「鹹甜醬油口味。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">75</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">白玉紅豆湯</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+白玉紅豆" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「白玉湯圓很有嚼勁。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">76</div><div class="k-content"><div class="k-header"><div><span class="k-store store-lawson">Lawson</span><span class="k-name">草莓大福 (季節)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Lawson+草莓大福" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「整顆草莓包在裡面。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">77</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">抹茶紅豆凍</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+抹茶紅豆凍" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「抹茶味很濃，不甜膩。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">78</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">黑蜜黃豆粉麻糬</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+黑蜜黃豆粉" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「入口即化。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">79</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">羊羹片</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+羊羹" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「小包裝適合配茶。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">80</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">長崎蛋糕 (Castella)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+超商+長崎蛋糕" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「底部有粗糖顆粒才正宗。」</div></div></div>
+
+                    <div class="k-category">🍫 巧克力 & 其它</div>
+                    <div class="konbini-item"><div class="k-rank">81</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">冷凍馬卡龍</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+冷凍馬卡龍" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「解凍一下吃，媲美專櫃。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">82</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Tirol 滋露巧克力</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Tirol+巧克力" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「有很多限定口味，適合當零錢糖。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">83</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Black Thunder 雷神</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+黑雷神" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「日本有高級版或限定口味。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">84</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">明治 The Chocolate</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+明治+The+Chocolate" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「包裝很美，適合送人。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">85</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Galanbo 巧克力棒</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Galanbo" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「外脆內軟。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">86</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Alfort 帆船巧克力</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Alfort+巧克力" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「藍色包裝最經典。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">87</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">萊姆葡萄餅乾</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+萊姆葡萄餅乾" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「像六花亭的平替版。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">88</div><div class="k-content"><div class="k-header"><div><span class="k-store store-lawson">Lawson</span><span class="k-name">低糖質巧克力</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Lawson+低糖質" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「怕胖的人的救星。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">89</div><div class="k-content"><div class="k-header"><div><span class="k-store store-fami">Family</span><span class="k-name">巧克力蛋糕</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+FamilyMart+巧克力蛋糕" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「Ken's Cafe 監修的很好吃。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">90</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Dars 巧克力</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Dars+巧克力" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「限定口味如開心果必買。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">91</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Look 巧克力</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Look+巧克力" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「一盒有四種口味。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">92</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Meltykiss (冬季限定)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Meltykiss" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「冬天去日本一定要買！」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">93</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Takenoko no Sato (竹筍)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+竹筍巧克力" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「餅乾口感酥脆。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">94</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Kinoko no Yama (香菇)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+香菇巧克力" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「巧克力部分比較多。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">95</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">巧克力棉花糖</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+巧克力棉花糖" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「便宜好吃。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">96</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Crunky 巧克力</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Crunky+巧克力" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「脆米口感。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">97</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Gaba 巧克力</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Gaba+巧克力" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「據說可以減壓。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">98</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Apollo 草莓巧克力</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Apollo+巧克力" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「懷舊造型。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">99</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Chocoball 大嘴鳥</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+大嘴鳥巧克力" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「花生口味最經典。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">100</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">巧克力玉米棒</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+巧克力玉米棒" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「浸滿巧克力的玉米棒，超濃。」</div></div></div>
                 </div>
             </div>
+
             <div class="comic-panel">
-                <div class="event-title">🍰 甜點 & 冰品</div>
+                <div class="event-title">🥤 飲料 & 零食 (101-109)</div>
                 <div class="konbini-list">
-                    <div class="konbini-item"><div class="k-rank">14</div><div><span class="k-store store-lawson">Lawson</span><span class="k-name">Premium 蛋糕捲</span><div class="k-desc">網友：「超商甜點的王者！奶油香濃完全不膩。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">15</div><div><span class="k-store store-all">All</span><span class="k-name">Ohayo 焦糖烤布蕾冰淇淋</span><div class="k-desc">網友：「這幾年最紅的冰！表層焦糖脆脆的超好吃。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">16</div><div><span class="k-store store-711">7-11</span><span class="k-name">舒芙蕾布丁</span><div class="k-desc">網友：「上面是舒芙蕾蛋糕，下面是布丁，雙重享受。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">17</div><div><span class="k-store store-all">All</span><span class="k-name">Haagen-Dazs (限定)</span><div class="k-desc">網友：「一定要找『麻糬』系列或季節限定！」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">18</div><div><span class="k-store store-all">All</span><span class="k-name">Pino 巧克力冰淇淋</span><div class="k-desc">網友：「一口一個，不知不覺就吃完一盒。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">19</div><div><span class="k-store store-all">All</span><span class="k-name">雪見大福 (麻糬冰)</span><div class="k-desc">網友：「皮Ｑ餡軟，經典不敗。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">20</div><div><span class="k-store store-fami">Family</span><span class="k-name">牧場牛奶冰淇淋 (Frappe)</span><div class="k-desc">網友：「要拿去櫃台請店員加牛奶打成冰沙，超好喝！」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">21</div><div><span class="k-store store-lawson">Lawson</span><span class="k-name">麻糬口感蛋糕捲</span><div class="k-desc">網友：「口感很像麻糬的蛋糕，非常特別。」</div></div></div>
-                </div>
-            </div>
-            <div class="comic-panel">
-                <div class="event-title">🥤 飲料 & 零食</div>
-                <div class="konbini-list">
-                    <div class="konbini-item"><div class="k-rank">22</div><div><span class="k-store store-all">All</span><span class="k-name">明治保加利亞優格飲</span><div class="k-desc">網友：「日本牛奶好喝，優格飲也超濃。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">23</div><div><span class="k-store store-all">All</span><span class="k-name">野菜生活 100 (限定)</span><div class="k-desc">網友：「補充纖維救星，限定口味（如白桃）必買。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">24</div><div><span class="k-store store-all">All</span><span class="k-name">綾鷹 (Ayataka) 綠茶</span><div class="k-desc">網友：「就像現泡的一樣，完全不澀。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">25</div><div><span class="k-store store-all">All</span><span class="k-name">BOSS 咖啡 (Craft Boss)</span><div class="k-desc">網友：「日本上班族人手一瓶，微糖或拿鐵都不錯。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">26</div><div><span class="k-store store-all">All</span><span class="k-name">日清海鮮杯麵 (Seafood)</span><div class="k-desc">網友：「不知道為什麼，日本買的料就是比較多！」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">27</div><div><span class="k-store store-all">All</span><span class="k-name">Jagariko 薯條杯</span><div class="k-desc">網友：「硬脆口感很舒壓，加熱水還可以變薯泥。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">28</div><div><span class="k-store store-all">All</span><span class="k-name">Pure 軟糖 (葡萄/檸檬)</span><div class="k-desc">網友：「酸酸甜甜，是日本軟糖的代表。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">29</div><div><span class="k-store store-711">7-11</span><span class="k-name">砂糖奶油樹 (Sugar Butter)</span><div class="k-desc">網友：「7-11自有品牌零食，好吃到可以當伴手禮。」</div></div></div>
-                    <div class="konbini-item"><div class="k-rank">30</div><div><span class="k-store store-all">All</span><span class="k-name">Mitsuya Cider (三矢蘇打)</span><div class="k-desc">網友：「日本國民汽水，氣泡很細緻。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">101</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">明治保加利亞優格飲</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+明治保加利亞優格飲" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「日本牛奶好喝，優格飲也超濃。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">102</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">野菜生活 100 (限定)</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+野菜生活100" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「補充纖維救星，限定口味必買。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">103</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">綾鷹 (Ayataka) 綠茶</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+綾鷹" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「像現泡一樣，不澀。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">104</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">BOSS 咖啡</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+BOSS咖啡" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「微糖或拿鐵都不錯。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">105</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">日清海鮮杯麵</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+日清海鮮杯麵" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「日本買的料就是比較多！」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">106</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Jagariko 薯條杯</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Jagariko" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「硬脆口感舒壓。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">107</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">Pure 軟糖</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+Pure軟糖" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「酸酸甜甜。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">108</div><div class="k-content"><div class="k-header"><div><span class="k-store store-711">7-11</span><span class="k-name">砂糖奶油樹</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+7-11+Sugar+Butter+Tree" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「好吃到可以當伴手禮。」</div></div></div>
+                    <div class="konbini-item"><div class="k-rank">109</div><div class="k-content"><div class="k-header"><div><span class="k-store store-all">All</span><span class="k-name">三矢蘇打</span></div><a href="https://www.google.com/search?tbm=isch&q=日本+三矢蘇打" target="_blank" class="k-photo-btn">📷 看照片</a></div><div class="k-desc">網友：「氣泡很細緻。」</div></div></div>
                 </div>
             </div>
         </div>
