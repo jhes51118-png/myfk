@@ -4,318 +4,400 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>明日天氣預報</title>
+    <!-- 引入外部現代字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- 引入 Lucide 現代圖示庫 -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* 手機一覽極簡風格設定 */
+        /* 現代極簡、高質感 UI 設定 */
+        :root {
+            --bg-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --card-shadow: 0 10px 30px -10px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, '微軟正黑體', sans-serif;
-            background-color: #f3f4f6;
-            color: #111827;
+            font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
-            padding: 10px;
+            padding: 15px;
             box-sizing: border-box;
-            height: 100vh; /* 鎖定全螢幕高度 */
-            overflow: hidden; /* 防止整個網頁垂直滑動 */
+            height: 100vh;
+            height: 100dvh; /* 適應現代手機底部 bar */
+            overflow: hidden;
             display: flex;
             justify-content: center;
         }
+
         .container {
             width: 100%;
             max-width: 500px;
             height: 100%;
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            box-sizing: border-box;
             display: flex;
             flex-direction: column;
         }
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-bottom: 12px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f9fafb;
+            margin-bottom: 20px;
+            padding: 10px 5px 15px 5px;
             flex-shrink: 0;
         }
-        h1 {
-            font-size: 1.5rem;
+
+        .header-title h1 {
+            font-size: 2rem;
             margin: 0;
             font-weight: 900;
-            letter-spacing: 1px;
+            letter-spacing: -0.03em;
+            color: var(--text-main);
         }
+
         #date-display {
-            font-size: 0.9rem;
-            color: #6b7280;
-            font-weight: bold;
-            margin: 0;
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-top: 4px;
         }
+
         #weather-content {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            overflow-y: auto; /* 萬一螢幕真的太小才允許內部稍微滑動 */
+            gap: 16px;
+            overflow-y: auto;
+            padding-bottom: 40px; 
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
         }
+        #weather-content::-webkit-scrollbar { display: none; }
+
+        /* 卡片共用樣式 */
         .location-block {
-            border-radius: 16px;
-            padding: 12px 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0; 
         }
-        /* 不同地點的專屬色塊 */
+
+        /* 專屬微漸層色塊 */
         .bg-beitou {
-            background-color: #f0fdf4; /* 淺綠色 */
-            border: 1px solid #bbf7d0;
+            background: linear-gradient(145deg, #f0fdf4 0%, #ffffff 100%);
+            border: 1px solid #dcfce7;
         }
         .bg-shezi {
-            background-color: #fff7ed; /* 淺橘色 */
-            border: 1px solid #fed7aa;
+            background: linear-gradient(145deg, #fff7ed 0%, #ffffff 100%);
+            border: 1px solid #ffedd5;
+        }
+        .bg-huarong {
+            background: linear-gradient(145deg, #eff6ff 0%, #ffffff 100%);
+            border: 1px solid #dbeafe;
+        }
+        .bg-737 {
+            background: linear-gradient(145deg, #fdf2f8 0%, #ffffff 100%);
+            border: 1px solid #fce7f3;
         }
         .bg-taipei {
-            background-color: #ffffff; /* 純白色 */
-            border: 1px solid #e5e7eb;
+            background: linear-gradient(145deg, #f8fafc 0%, #ffffff 100%);
+            border: 1px solid #e2e8f0;
         }
+
+        /* 主資訊區排版 */
         .main-info {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            z-index: 2;
         }
+
+        .loc-title {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
         .loc-title h2 {
-            font-size: 1.2rem;
-            margin: 0 0 4px 0;
-            color: #1f2937;
+            font-size: 1.3rem;
+            margin: 0;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
+
         .loc-desc {
-            font-size: 0.95rem;
-            color: #4b5563;
-            font-weight: 500;
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
+
         .temp-area {
             text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
         }
+
         .temp-info {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            line-height: 1;
+            display: flex;
+            align-items: baseline;
         }
+        .temp-min {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            font-weight: 600;
+            margin-right: 6px;
+        }
+
         .rain-info {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: #2563eb;
-            background-color: #eff6ff;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-weight: bold;
-            display: inline-block;
-            margin-top: 4px;
+            background-color: #dbeafe;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
-        
-        /* 下雨提醒小標籤 */
+
+        /* 背景大圖示浮水印效果 */
+        .watermark-icon {
+            position: absolute;
+            right: -10px;
+            bottom: -10px;
+            width: 120px;
+            height: 120px;
+            opacity: 0.04;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* 下雨提醒標籤 */
         .rain-alert {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: #b91c1c;
             background-color: #fef2f2;
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            margin-top: 8px;
-            align-self: flex-start;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            margin-top: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             border: 1px solid #fecaca;
+            z-index: 2;
+        }
+
+        /* 油飯建議區塊 */
+        .rice-suggestion {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 14px 16px;
+            border-radius: 16px;
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            z-index: 2;
         }
         
-        /* 橫向滑動的逐時天氣列 */
-        .hourly-section {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px dashed #e5e7eb;
+        .rice-title {
             display: flex;
-            overflow-x: auto;
-            gap: 8px;
-            /* 隱藏捲軸 */
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none;  /* IE and Edge */
+            align-items: center;
+            gap: 6px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #92400e;
         }
-        .hourly-section::-webkit-scrollbar {
-            display: none; /* Chrome, Safari */
+
+        .rice-score-text {
+            color: #9ca3af;
+            font-size: 0.8rem;
+            font-weight: 500;
         }
+
+        .rice-reason {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #b45309;
+            background: #fef3c7;
+            padding: 4px 10px;
+            border-radius: 8px;
+        }
+
+        .amount-high { color: #dc2626; font-size: 1.2rem; font-weight: 900; }
+        .amount-mid-high { color: #ea580c; font-size: 1.2rem; font-weight: 900; }
+        .amount-mid { color: #d97706; font-size: 1.2rem; font-weight: 900; }
+        .amount-mid-low { color: #0284c7; font-size: 1.2rem; font-weight: 900; }
+        .amount-low { color: #2563eb; font-size: 1.2rem; font-weight: 900; }
+
+        /* 【全新】平均分配的一覽式逐時天氣列，免滑動 */
+        .hourly-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0,0,0,0.04);
+            display: flex;
+            justify-content: space-between; /* 均分空間 */
+            gap: 4px; /* 縮小間距確保能塞入 */
+            z-index: 2;
+        }
+        
         .hourly-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 52px;
-            background: #ffffff; /* 改為純白以突顯在色塊上 */
-            border: 1px solid rgba(0,0,0,0.04);
-            padding: 8px 4px;
-            border-radius: 12px;
-            flex-shrink: 0;
+            flex: 1; /* 彈性填滿容器，確保一覽無遺 */
+            min-width: 0; /* 允許壓縮 */
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            padding: 10px 2px;
+            border-radius: 14px;
+            gap: 6px;
         }
         .time-label {
             font-size: 0.75rem;
-            color: #6b7280;
-            font-weight: bold;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
-        .hourly-emoji {
-            font-size: 1.3rem;
-            margin: 3px 0;
+        .hourly-icon-wrapper {
+            margin: 2px 0;
         }
         .hourly-temp {
-            font-size: 0.9rem;
-            font-weight: 800;
-            color: #1f2937;
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: var(--text-main);
         }
         .hourly-rain {
             font-size: 0.7rem;
             color: #3b82f6;
-            font-weight: bold;
-            margin-top: 2px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
+
         .error {
             color: #dc2626;
             background-color: #fef2f2;
-            padding: 15px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 16px;
             font-size: 1rem;
+            font-weight: 600;
+            border: 1px solid #fecaca;
         }
         
-        /* 油飯建議區塊樣式 */
-        .rice-suggestion {
-            background-color: rgba(255, 255, 255, 0.85); /* 改為半透明白底以適應各色塊 */
-            color: #b45309;
-            padding: 10px 12px;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: bold;
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px dashed #f59e0b;
-        }
-        .rice-reason {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #d97706;
-            background: #fffbeb;
-            border: 1px solid #fde68a;
-            padding: 2px 6px;
-            border-radius: 6px;
-        }
-        
-        /* 備料多寡的顏色強調 */
-        .amount-high { color: #dc2626; font-size: 1.15rem; font-weight: 900; margin-left: 2px; }
-        .amount-mid-high { color: #ea580c; font-size: 1.15rem; font-weight: 900; margin-left: 2px; }
-        .amount-mid { color: #d97706; font-size: 1.15rem; font-weight: 900; margin-left: 2px; }
-        .amount-mid-low { color: #0284c7; font-size: 1.15rem; font-weight: 900; margin-left: 2px; }
-        .amount-low { color: #2563eb; font-size: 1.15rem; font-weight: 900; margin-left: 2px; }
+        .text-blue { color: #3b82f6; }
+        .text-orange { color: #f59e0b; }
+        .text-gray { color: #64748b; }
+        .text-red { color: #ef4444; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <div class="header">
-            <h1>明日預報</h1>
-            <div id="date-display">載入中...</div>
+            <div class="header-title">
+                <h1>明日天氣</h1>
+                <div id="date-display">載入中...</div>
+            </div>
+            <i data-lucide="calendar-days" class="text-gray" style="width: 28px; height: 28px; opacity: 0.5;"></i>
         </div>
         <div id="weather-content">
-            <p style="color: #6b7280; text-align: center; padding: 40px 0; font-weight:bold;">正在獲取最新天氣... ⏳</p>
+            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height: 200px; color: #94a3b8; gap: 12px;">
+                <i data-lucide="loader-2" style="animation: spin 1s linear infinite; width: 32px; height: 32px;"></i>
+                <span style="font-weight: 600; font-size: 0.9rem;">正在同步氣象資料...</span>
+            </div>
         </div>
     </div>
 
     <script>
-        // 定義地點 (加上 theme 屬性綁定專屬顏色)
+        // 定義地點，加入 scheduleDay 代表固定去的營業日 (0:日, 1:一, 2:二, 3:三, 4:四, 5:五, 6:六)
         const LOCATIONS = [
-            { id: 'beitou', name: '📍 北投市場', lat: 25.1321, lon: 121.4987, type: 'market', theme: 'bg-beitou' },
-            { id: 'shezi', name: '📍 社子市場', lat: 25.0863, lon: 121.5065, type: 'market', theme: 'bg-shezi' },
-            { id: 'taipei', name: '🏙️ 台北市區', lat: 25.0330, lon: 121.5654, type: 'city', theme: 'bg-taipei' }
+            { id: 'huarong', name: '華榮市場', lat: 25.0945, lon: 121.5230, type: 'market', theme: 'bg-huarong', scheduleDay: 1 },
+            { id: 'beitou', name: '北投市場', lat: 25.1321, lon: 121.4987, type: 'market', theme: 'bg-beitou', scheduleDay: 2 },
+            { id: '737', name: '737市場', lat: 25.0796, lon: 121.5772, type: 'market', theme: 'bg-737', scheduleDay: 4 },
+            { id: 'shezi', name: '社子市場', lat: 25.0863, lon: 121.5065, type: 'market', theme: 'bg-shezi', scheduleDay: 0 },
+            { id: 'taipei', name: '台北市區', lat: 25.0330, lon: 121.5654, type: 'city', theme: 'bg-taipei', scheduleDay: -1 }
         ];
 
-        // 轉換天氣代碼為物件 (包含文字與 Emoji)
+        const WEEKDAY_NAMES = ['日', '一', '二', '三', '四', '五', '六'];
+
         const getWeatherInfo = (code) => {
-            if (code === 0) return { text: '晴朗無雲', emoji: '☀️' };
-            if (code === 1) return { text: '晴時多雲', emoji: '🌤️' };
-            if (code === 2) return { text: '多雲', emoji: '☁️' };
-            if (code === 3) return { text: '陰天', emoji: '☁️' };
-            if ([45, 48].includes(code)) return { text: '起霧', emoji: '🌫️' };
-            if ([51, 53, 55, 56, 57].includes(code)) return { text: '毛毛雨', emoji: '🌧️' };
-            if ([61, 63, 65, 66, 67].includes(code)) return { text: '下雨', emoji: '🌧️' };
-            if ([71, 73, 75, 77].includes(code)) return { text: '下雪', emoji: '❄️' };
-            if ([80, 81, 82].includes(code)) return { text: '陣雨', emoji: '🌦️' };
-            if ([95, 96, 99].includes(code)) return { text: '雷雨', emoji: '⛈️' };
-            return { text: '未知', emoji: '❓' };
+            if (code === 0) return { text: '晴朗無雲', icon: 'sun', colorClass: 'text-orange' };
+            if (code === 1) return { text: '晴時多雲', icon: 'cloud-sun', colorClass: 'text-orange' };
+            if (code === 2) return { text: '多雲', icon: 'cloud', colorClass: 'text-gray' };
+            if (code === 3) return { text: '陰天', icon: 'cloudy', colorClass: 'text-gray' };
+            if ([45, 48].includes(code)) return { text: '起霧', icon: 'cloud-fog', colorClass: 'text-gray' };
+            if ([51, 53, 55, 56, 57].includes(code)) return { text: '毛毛雨', icon: 'cloud-drizzle', colorClass: 'text-blue' };
+            if ([61, 63, 65, 66, 67].includes(code)) return { text: '下雨', icon: 'cloud-rain', colorClass: 'text-blue' };
+            if ([71, 73, 75, 77].includes(code)) return { text: '下雪', icon: 'snowflake', colorClass: 'text-blue' };
+            if ([80, 81, 82].includes(code)) return { text: '陣雨', icon: 'cloud-showers-heavy', colorClass: 'text-blue' };
+            if ([95, 96, 99].includes(code)) return { text: '雷雨', icon: 'cloud-lightning', colorClass: 'text-red' };
+            return { text: '未知', icon: 'help-circle', colorClass: 'text-gray' };
         };
 
-        // 判斷油飯建議準備數量的邏輯 (多、多偏中、中、少偏中、少 與 拜拜日)
         const getRiceSuggestion = (code, minTemp, rainProb, dateObj) => {
-            let score = 60; // 預設基準分數為 60 (中等)
+            let score = 60;
             let reasons = [];
-
-            // 1. 農曆初一、十五判斷 (利用瀏覽器內建國際化日曆 API)
             let isWorshipDay = false;
+
             try {
                 const lunarDay = new Intl.DateTimeFormat('en-US-u-ca-chinese', {day: 'numeric'}).format(dateObj);
                 if (lunarDay === '1' || lunarDay === '15') {
                     isWorshipDay = true;
-                    score += 30; // 拜拜日人潮需求大增，大幅加分
+                    score += 30;
                     reasons.push("初一十五拜拜");
                 }
-            } catch(e) {
-                console.warn("瀏覽器不支援農曆轉換");
-            }
+            } catch(e) { console.warn("不支援農曆轉換"); }
 
-            // 2. 天氣狀況判斷
-            if (code === 0 || code === 1) {
-                score += 10;
-                if (!isWorshipDay) reasons.push("天氣好人多");
-            } else if ([95, 96, 99].includes(code)) {
-                score -= 40;
-                reasons.push("雷雨避出門");
+            if ([95, 96, 99].includes(code)) {
+                score -= 40; reasons.push("雷雨避出門");
             } else if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code) || rainProb >= 50) {
-                score -= 25;
-                reasons.push("下雨天人少");
+                score -= 25; reasons.push("下雨天人少");
             } else if ([51, 53, 55, 56, 57].includes(code) || rainProb >= 30) {
-                score -= 10;
-                reasons.push("可能降雨");
+                score -= 10; reasons.push("可能降雨");
+            } else if (rainProb <= 20 || code === 0 || code === 1) {
+                score += 20; if (!isWorshipDay) reasons.push("降雨機率低");
             } else {
-                if (!isWorshipDay) reasons.push("天氣穩定");
+                score += 10; if (!isWorshipDay) reasons.push("天氣穩定");
             }
 
-            // 3. 溫度判斷 (寒流)
             if (minTemp <= 12) {
-                score -= 20;
-                reasons.push("寒流太冷");
+                score -= 20; reasons.push("寒流太冷");
             } else if (minTemp <= 15) {
-                score -= 10;
-                reasons.push("氣溫偏低");
+                score -= 10; reasons.push("氣溫偏低");
             }
 
-            // 限制分數在 10 ~ 100 之間
             score = Math.max(10, Math.min(100, score));
 
-            // 根據總分轉換為：多、多偏中、中、少偏中、少
             let amount = "中";
             let amountClass = "amount-mid";
-            if (score >= 85) {
-                amount = "多";
-                amountClass = "amount-high";
-            } else if (score >= 70) {
-                amount = "多偏中";
-                amountClass = "amount-mid-high";
-            } else if (score >= 50) {
-                amount = "中";
-                amountClass = "amount-mid";
-            } else if (score >= 35) {
-                amount = "少偏中";
-                amountClass = "amount-mid-low";
-            } else {
-                amount = "少";
-                amountClass = "amount-low";
-            }
+            if (score >= 85) { amount = "多"; amountClass = "amount-high"; }
+            else if (score >= 70) { amount = "多偏中"; amountClass = "amount-mid-high"; }
+            else if (score >= 50) { amount = "中"; amountClass = "amount-mid"; }
+            else if (score >= 35) { amount = "少偏中"; amountClass = "amount-mid-low"; }
+            else { amount = "少"; amountClass = "amount-low"; }
 
-            // 組合原因 (最多顯示前兩個關鍵原因)
             const reasonText = reasons.slice(0, 2).join(" + ");
-
             return { amount, reason: reasonText, amountClass, score };
         };
 
@@ -327,26 +409,36 @@
                 let htmlOutput = '';
                 let displayDateStr = '';
 
-                for (const loc of LOCATIONS) {
+                // 計算出明天是星期幾，以此作為排序基準
+                const todayForSort = new Date();
+                const tomorrowForSort = new Date(todayForSort);
+                tomorrowForSort.setDate(tomorrowForSort.getDate() + 1);
+                const targetWeekday = tomorrowForSort.getDay();
+
+                // 根據距離明天的天數進行排序 (當日的會在最前面，依序往下排)
+                const sortedLocations = [...LOCATIONS].sort((a, b) => {
+                    if (a.type === 'city') return 1; // 總覽永遠置底
+                    if (b.type === 'city') return -1;
+                    const distA = (a.scheduleDay - targetWeekday + 7) % 7;
+                    const distB = (b.scheduleDay - targetWeekday + 7) % 7;
+                    return distA - distB;
+                });
+
+                for (const loc of sortedLocations) {
+                    // API 統一抓取明天的預報 (forecast_days=2 代表索引 1 永遠是明天)
                     const url = `https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&hourly=temperature_2m,weather_code,precipitation_probability&timezone=Asia%2FTaipei&forecast_days=2`;
                     const res = await fetch(url);
-                    
-                    if (!res.ok) {
-                        const errText = await res.text();
-                        throw new Error(`API 錯誤 (${res.status}): ${errText}`);
-                    }
+                    if (!res.ok) throw new Error(`API 錯誤 (${res.status})`);
                     const data = await res.json();
                     
-                    // 建立明天的日期物件
                     const tomorrowDateString = data.daily.time[1];
                     const [year, month, day] = tomorrowDateString.split('-');
                     const dateObj = new Date(year, month - 1, day);
                     
                     if (!displayDateStr) {
                          displayDateStr = dateObj.toLocaleDateString('zh-TW', { month: 'long', day: 'numeric' });
-                         // 加上星期幾
-                         const weekday = ['日', '一', '二', '三', '四', '五', '六'][dateObj.getDay()];
-                         dateDisplay.textContent = `${displayDateStr} (星期${weekday})`;
+                         const weekday = WEEKDAY_NAMES[dateObj.getDay()];
+                         dateDisplay.textContent = `${displayDateStr} (週${weekday})`;
                     }
 
                     const wInfo = getWeatherInfo(data.daily.weather_code[1]);
@@ -354,56 +446,52 @@
                     const minTemp = Math.round(data.daily.temperature_2m_min[1]);
                     const rainProb = data.daily.precipitation_probability_max[1];
 
-                    // --- 預測全天何時開始下雨 ---
                     let rainStartHour = -1;
                     data.hourly.time.forEach((timeStr, index) => {
                         if (timeStr.startsWith(tomorrowDateString)) {
                             const hour = parseInt(timeStr.split('T')[1].split(':')[0], 10);
                             const hRainProb = data.hourly.precipitation_probability[index];
                             const hCode = data.hourly.weather_code[index];
-                            
-                            // 判斷下雨條件：降雨機率 >= 40% 或 天氣代碼顯示為降雨(51~99)
                             const isRaining = hRainProb >= 40 || (hCode >= 51 && hCode <= 99);
                             if (isRaining && rainStartHour === -1) {
-                                rainStartHour = hour; // 記錄第一次碰到下雨的時間
+                                rainStartHour = hour;
                             }
                         }
                     });
 
                     let rainAlertHtml = '';
-                    // 如果整天有較高的機率下雨，且有抓到開始下雨的時間
                     if (rainProb >= 40 && rainStartHour !== -1) {
-                        rainAlertHtml = `<div class="rain-alert">⚠️ 預估約 ${rainStartHour.toString().padStart(2, '0')}時 開始下雨</div>`;
+                        rainAlertHtml = `
+                            <div class="rain-alert">
+                                <i data-lucide="bell-ring" style="width: 14px; height: 14px;"></i>
+                                預估約 ${rainStartHour.toString().padStart(2, '0')}時 開始下雨
+                            </div>`;
                     }
 
-                    // --- 計算營業時間 06:00 - 14:00 的專屬天氣數據 ---
                     let marketMinTemp = Infinity;
                     let marketMaxRainProb = -1;
                     let worstWeatherCode = 0;
                     let maxSeverity = -1;
 
-                    // 定義天氣惡劣程度，用來抓出該時段最糟的天氣
                     const getWeatherSeverity = (code) => {
-                        if ([95, 96, 99].includes(code)) return 5; // 雷雨
-                        if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return 4; // 下雨/陣雨
-                        if ([71, 73, 75, 77].includes(code)) return 4; // 下雪
-                        if ([51, 53, 55, 56, 57].includes(code)) return 3; // 毛毛雨
-                        if ([45, 48].includes(code)) return 2; // 起霧
-                        if ([2, 3].includes(code)) return 1; // 多雲/陰天
-                        return 0; // 晴朗
+                        if ([95, 96, 99].includes(code)) return 5;
+                        if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code) || [71, 73, 75, 77].includes(code)) return 4;
+                        if ([51, 53, 55, 56, 57].includes(code)) return 3;
+                        if ([45, 48].includes(code)) return 2;
+                        if ([2, 3].includes(code)) return 1;
+                        return 0;
                     };
 
                     data.hourly.time.forEach((timeStr, index) => {
                         if (timeStr.startsWith(tomorrowDateString)) {
                             const hour = parseInt(timeStr.split('T')[1].split(':')[0], 10);
-                            if (hour >= 6 && hour <= 14) {
+                            if (hour >= 5 && hour <= 14) {
                                 const hTemp = data.hourly.temperature_2m[index];
                                 const hRainProb = data.hourly.precipitation_probability[index];
                                 const hCode = data.hourly.weather_code[index];
 
                                 if (hTemp < marketMinTemp) marketMinTemp = hTemp;
                                 if (hRainProb > marketMaxRainProb) marketMaxRainProb = hRainProb;
-
                                 const severity = getWeatherSeverity(hCode);
                                 if (severity > maxSeverity) {
                                     maxSeverity = severity;
@@ -413,81 +501,97 @@
                         }
                     });
                     
-                    // 防呆：如果沒抓到資料，退回使用全日資料
                     if (marketMinTemp === Infinity) marketMinTemp = minTemp;
                     if (marketMaxRainProb === -1) marketMaxRainProb = rainProb;
                     if (maxSeverity === -1) worstWeatherCode = data.daily.weather_code[1];
-                    // ------------------------------------------
 
-                    // 取得市場油飯準備建議 (改用營業時段 06-14 的最壞天氣、最低溫與最高降雨率)
                     let riceHtml = '';
+                    let dayTagHtml = ''; 
+                    
                     if (loc.type === 'market') {
+                        // 加入小標籤讓您知道這個市場是固定星期幾去
+                        dayTagHtml = `<span style="font-size: 0.85rem; color: #94a3b8; margin-left: 6px; font-weight: 600;">(週${WEEKDAY_NAMES[loc.scheduleDay]})</span>`;
+                        
                         const rice = getRiceSuggestion(worstWeatherCode, Math.round(marketMinTemp), marketMaxRainProb, dateObj);
                         riceHtml = `
                             <div class="rice-suggestion">
-                                <span>🍚 建議備飯：<span class="${rice.amountClass}">${rice.amount}</span> <small style="color:#9ca3af; font-size:0.8rem; font-weight:normal; margin-left:4px;">(${rice.score}分)</small></span>
+                                <div class="rice-title">
+                                    <i data-lucide="package-open" style="width: 18px; height: 18px;"></i>
+                                    準備量：<span class="${rice.amountClass}">${rice.amount}</span> 
+                                    <span class="rice-score-text">(${rice.score}分)</span>
+                                </div>
                                 <span class="rice-reason">${rice.reason}</span>
                             </div>
                         `;
                     }
 
-                    // 渲染每個地點的主卡片
                     htmlOutput += `
                         <div class="location-block ${loc.theme}">
+                            <i data-lucide="${wInfo.icon}" class="watermark-icon"></i>
+                            
                             <div class="main-info">
                                 <div class="loc-title">
-                                    <h2>${loc.name}</h2>
-                                    <div class="loc-desc">${wInfo.emoji} ${wInfo.text}</div>
+                                    <h2><i data-lucide="map-pin" style="width: 18px; height: 18px; color: #ef4444;"></i> ${loc.name} ${dayTagHtml}</h2>
+                                    <div class="loc-desc">
+                                        <i data-lucide="${wInfo.icon}" class="${wInfo.colorClass}" style="width: 20px; height: 20px;"></i> 
+                                        ${wInfo.text}
+                                    </div>
                                 </div>
                                 <div class="temp-area">
-                                    <div class="temp-info">${minTemp}°<span style="color:#d1d5db; margin:0 2px;">~</span>${maxTemp}°</div>
-                                    <div class="rain-info">☔ ${rainProb}%</div>
+                                    <div class="temp-info">
+                                        <span class="temp-min">${minTemp}°</span>${maxTemp}°
+                                    </div>
+                                    <div class="rain-info">
+                                        <i data-lucide="umbrella" style="width: 14px; height: 14px;"></i> 
+                                        ${rainProb}%
+                                    </div>
                                 </div>
                             </div>
                             ${rainAlertHtml}
                             ${riceHtml}
                     `;
 
-                    // 渲染市場的橫向逐時天氣 (06:00 - 14:00)
                     if (loc.type === 'market') {
                         htmlOutput += `<div class="hourly-section">`;
-                        
                         data.hourly.time.forEach((timeStr, index) => {
                             if (timeStr.startsWith(tomorrowDateString)) {
                                 const hour = parseInt(timeStr.split('T')[1].split(':')[0], 10);
-                                // 06-14點內，每2個小時顯示一次 (06, 08, 10, 12, 14時)
-                                if (hour >= 6 && hour <= 14 && hour % 2 === 0) {
-                                    const timeLabel = `${hour.toString().padStart(2, '0')}時`;
+                                if (hour >= 5 && hour <= 14 && (hour - 5) % 2 === 0) {
                                     const temp = Math.round(data.hourly.temperature_2m[index]);
                                     const hInfo = getWeatherInfo(data.hourly.weather_code[index]);
                                     const hRain = data.hourly.precipitation_probability[index];
                                     
                                     htmlOutput += `
                                     <div class="hourly-item">
-                                        <span class="time-label">${timeLabel}</span>
-                                        <span class="hourly-emoji">${hInfo.emoji}</span>
+                                        <span class="time-label">${hour.toString().padStart(2, '0')}時</span>
+                                        <div class="hourly-icon-wrapper">
+                                            <i data-lucide="${hInfo.icon}" class="${hInfo.colorClass}" style="width: 20px; height: 20px;"></i>
+                                        </div>
                                         <span class="hourly-temp">${temp}°</span>
                                         <span class="hourly-rain">${hRain}%</span>
                                     </div>`;
                                 }
                             }
                         });
-                        htmlOutput += `</div>`; // 結束 hourly-section
+                        htmlOutput += `</div>`;
                     }
-                    htmlOutput += `</div>`; // 結束 location-block
+                    htmlOutput += `</div>`;
                 }
                 
                 contentDiv.innerHTML = htmlOutput;
+                lucide.createIcons();
 
             } catch (error) {
                 console.error("詳細錯誤訊息:", error);
-                contentDiv.innerHTML = `<div class="error">無法取得天氣資料，請檢查網路連線後再試。<br><br><small style="color:#9ca3af;">${error.message}</small></div>`;
-                dateDisplay.textContent = "載入失敗";
+                contentDiv.innerHTML = `<div class="error"><i data-lucide="alert-circle" style="display:inline-block; vertical-align:middle; margin-right:6px;"></i> 無法取得天氣資料，請檢查網路連線。</div>`;
+                lucide.createIcons();
             }
         }
 
-        // 頁面載入完成後自動執行
         window.onload = fetchAllWeather;
     </script>
+    <style>
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
 </body>
 </html>
