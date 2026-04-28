@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>明日天氣預報</title>
+    <title>市場天氣預報</title>
     <!-- 引入外部現代字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <!-- 引入 Lucide 現代圖示庫 -->
@@ -41,11 +41,40 @@
 
         .header {
             display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+            padding: 5px 5px 10px 5px;
+            flex-shrink: 0;
+            gap: 8px;
+        }
+
+        /* 醒目的今明兩日狀態列 */
+        .status-badge {
+            align-self: flex-start;
+            padding: 6px 14px;
+            border-radius: 99px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .status-today {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: white;
+            border: 2px solid #ffedd5;
+        }
+        .status-tomorrow {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border: 2px solid #dbeafe;
+        }
+
+        .header-title-row {
+            display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-bottom: 20px;
-            padding: 10px 5px 15px 5px;
-            flex-shrink: 0;
         }
 
         .header-title h1 {
@@ -88,26 +117,11 @@
         }
 
         /* 專屬微漸層色塊 */
-        .bg-beitou {
-            background: linear-gradient(145deg, #f0fdf4 0%, #ffffff 100%);
-            border: 1px solid #dcfce7;
-        }
-        .bg-shezi {
-            background: linear-gradient(145deg, #fff7ed 0%, #ffffff 100%);
-            border: 1px solid #ffedd5;
-        }
-        .bg-huarong {
-            background: linear-gradient(145deg, #eff6ff 0%, #ffffff 100%);
-            border: 1px solid #dbeafe;
-        }
-        .bg-737 {
-            background: linear-gradient(145deg, #fdf2f8 0%, #ffffff 100%);
-            border: 1px solid #fce7f3;
-        }
-        .bg-taipei {
-            background: linear-gradient(145deg, #f8fafc 0%, #ffffff 100%);
-            border: 1px solid #e2e8f0;
-        }
+        .bg-beitou { background: linear-gradient(145deg, #f0fdf4 0%, #ffffff 100%); border: 1px solid #dcfce7; }
+        .bg-shezi { background: linear-gradient(145deg, #fff7ed 0%, #ffffff 100%); border: 1px solid #ffedd5; }
+        .bg-huarong { background: linear-gradient(145deg, #eff6ff 0%, #ffffff 100%); border: 1px solid #dbeafe; }
+        .bg-737 { background: linear-gradient(145deg, #fdf2f8 0%, #ffffff 100%); border: 1px solid #fce7f3; }
+        .bg-taipei { background: linear-gradient(145deg, #f8fafc 0%, #ffffff 100%); border: 1px solid #e2e8f0; }
 
         /* 主資訊區排版 */
         .main-info {
@@ -177,7 +191,6 @@
             gap: 4px;
         }
 
-        /* 背景大圖示浮水印效果 */
         .watermark-icon {
             position: absolute;
             right: -10px;
@@ -189,7 +202,6 @@
             pointer-events: none;
         }
 
-        /* 下雨提醒標籤 */
         .rain-alert {
             font-size: 0.85rem;
             color: #b91c1c;
@@ -205,7 +217,6 @@
             z-index: 2;
         }
 
-        /* 油飯建議區塊 */
         .rice-suggestion {
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(8px);
@@ -229,20 +240,8 @@
             color: #92400e;
         }
 
-        .rice-score-text {
-            color: #9ca3af;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .rice-reason {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #b45309;
-            background: #fef3c7;
-            padding: 4px 10px;
-            border-radius: 8px;
-        }
+        .rice-score-text { color: #9ca3af; font-size: 0.8rem; font-weight: 500; }
+        .rice-reason { font-size: 0.8rem; font-weight: 600; color: #b45309; background: #fef3c7; padding: 4px 10px; border-radius: 8px; }
 
         .amount-high { color: #dc2626; font-size: 1.2rem; font-weight: 900; }
         .amount-mid-high { color: #ea580c; font-size: 1.2rem; font-weight: 900; }
@@ -250,14 +249,13 @@
         .amount-mid-low { color: #0284c7; font-size: 1.2rem; font-weight: 900; }
         .amount-low { color: #2563eb; font-size: 1.2rem; font-weight: 900; }
 
-        /* 【全新】平均分配的一覽式逐時天氣列，免滑動 */
         .hourly-section {
             margin-top: 16px;
             padding-top: 16px;
             border-top: 1px solid rgba(0,0,0,0.04);
             display: flex;
-            justify-content: space-between; /* 均分空間 */
-            gap: 4px; /* 縮小間距確保能塞入 */
+            justify-content: space-between; 
+            gap: 4px; 
             z-index: 2;
         }
         
@@ -265,8 +263,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex: 1; /* 彈性填滿容器，確保一覽無遺 */
-            min-width: 0; /* 允許壓縮 */
+            flex: 1; 
+            min-width: 0; 
             background: rgba(255, 255, 255, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.8);
             box-shadow: 0 2px 8px rgba(0,0,0,0.02);
@@ -274,36 +272,12 @@
             border-radius: 14px;
             gap: 6px;
         }
-        .time-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-        .hourly-icon-wrapper {
-            margin: 2px 0;
-        }
-        .hourly-temp {
-            font-size: 0.95rem;
-            font-weight: 900;
-            color: var(--text-main);
-        }
-        .hourly-rain {
-            font-size: 0.7rem;
-            color: #3b82f6;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
+        .time-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; letter-spacing: -0.5px; }
+        .hourly-icon-wrapper { margin: 2px 0; }
+        .hourly-temp { font-size: 0.95rem; font-weight: 900; color: var(--text-main); }
+        .hourly-rain { font-size: 0.7rem; color: #3b82f6; font-weight: 700; letter-spacing: -0.5px; }
 
-        .error {
-            color: #dc2626;
-            background-color: #fef2f2;
-            padding: 20px;
-            border-radius: 16px;
-            font-size: 1rem;
-            font-weight: 600;
-            border: 1px solid #fecaca;
-        }
+        .error { color: #dc2626; background-color: #fef2f2; padding: 20px; border-radius: 16px; font-size: 1rem; font-weight: 600; border: 1px solid #fecaca; }
         
         .text-blue { color: #3b82f6; }
         .text-orange { color: #f59e0b; }
@@ -315,22 +289,26 @@
 
     <div class="container">
         <div class="header">
-            <div class="header-title">
-                <h1>明日天氣</h1>
-                <div id="date-display">載入中...</div>
+            <!-- 這裡會由 JS 動態塞入醒目狀態列 -->
+            <div id="status-badge-container"></div>
+            
+            <div class="header-title-row">
+                <div class="header-title">
+                    <h1 id="main-title">天氣預報</h1>
+                    <div id="date-display">載入中...</div>
+                </div>
+                <i data-lucide="calendar-days" class="text-gray" style="width: 28px; height: 28px; opacity: 0.5;"></i>
             </div>
-            <i data-lucide="calendar-days" class="text-gray" style="width: 28px; height: 28px; opacity: 0.5;"></i>
         </div>
         <div id="weather-content">
             <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height: 200px; color: #94a3b8; gap: 12px;">
                 <i data-lucide="loader-2" style="animation: spin 1s linear infinite; width: 32px; height: 32px;"></i>
-                <span style="font-weight: 600; font-size: 0.9rem;">正在同步氣象資料...</span>
+                <span style="font-weight: 600; font-size: 0.9rem;">正在同步氣象資料與排程...</span>
             </div>
         </div>
     </div>
 
     <script>
-        // 定義地點，加入 scheduleDay 代表固定去的營業日 (0:日, 1:一, 2:二, 3:三, 4:四, 5:五, 6:六)
         const LOCATIONS = [
             { id: 'huarong', name: '華榮市場', lat: 25.0945, lon: 121.5230, type: 'market', theme: 'bg-huarong', scheduleDay: 1 },
             { id: 'beitou', name: '北投市場', lat: 25.1321, lon: 121.4987, type: 'market', theme: 'bg-beitou', scheduleDay: 2 },
@@ -404,20 +382,42 @@
         async function fetchAllWeather() {
             const contentDiv = document.getElementById('weather-content');
             const dateDisplay = document.getElementById('date-display');
+            const mainTitle = document.getElementById('main-title');
+            const statusBadgeContainer = document.getElementById('status-badge-container');
             
             try {
                 let htmlOutput = '';
                 let displayDateStr = '';
 
-                // 計算出明天是星期幾，以此作為排序基準
-                const todayForSort = new Date();
-                const tomorrowForSort = new Date(todayForSort);
-                tomorrowForSort.setDate(tomorrowForSort.getDate() + 1);
-                const targetWeekday = tomorrowForSort.getDay();
+                // --- 【關鍵邏輯】判斷現在時間，決定顯示「今天」還是「明天」 ---
+                const now = new Date();
+                const currentHour = now.getHours();
+                
+                // 是否為明天 (如果超過 14:00 (含)，則為 true)
+                const isShowingTomorrow = currentHour >= 14;
+                
+                // 定義 API 要抓取的目標日期索引 (0: 今天, 1: 明天)
+                const targetDayIndex = isShowingTomorrow ? 1 : 0;
+                
+                // 計算目標日期的 Date 物件，用來排序市場
+                const targetDateObj = new Date(now);
+                if (isShowingTomorrow) {
+                    targetDateObj.setDate(targetDateObj.getDate() + 1);
+                }
+                const targetWeekday = targetDateObj.getDay();
 
-                // 根據距離明天的天數進行排序 (當日的會在最前面，依序往下排)
+                // 更新 UI 頂部的狀態列
+                if (isShowingTomorrow) {
+                    mainTitle.textContent = "明日預報";
+                    statusBadgeContainer.innerHTML = `<div class="status-badge status-tomorrow"><i data-lucide="rocket" style="width: 16px; height: 16px;"></i> 顯示：明日預報 (收攤備料)</div>`;
+                } else {
+                    mainTitle.textContent = "今日天氣";
+                    statusBadgeContainer.innerHTML = `<div class="status-badge status-today"><i data-lucide="sun" style="width: 16px; height: 16px;"></i> 顯示：今日天氣 (營業中)</div>`;
+                }
+
+                // 根據距離目標日期的天數進行排序 (當日市場最優先)
                 const sortedLocations = [...LOCATIONS].sort((a, b) => {
-                    if (a.type === 'city') return 1; // 總覽永遠置底
+                    if (a.type === 'city') return 1; 
                     if (b.type === 'city') return -1;
                     const distA = (a.scheduleDay - targetWeekday + 7) % 7;
                     const distB = (b.scheduleDay - targetWeekday + 7) % 7;
@@ -425,30 +425,33 @@
                 });
 
                 for (const loc of sortedLocations) {
-                    // API 統一抓取明天的預報 (forecast_days=2 代表索引 1 永遠是明天)
+                    // API 一律抓取兩天資料
                     const url = `https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&hourly=temperature_2m,weather_code,precipitation_probability&timezone=Asia%2FTaipei&forecast_days=2`;
                     const res = await fetch(url);
                     if (!res.ok) throw new Error(`API 錯誤 (${res.status})`);
                     const data = await res.json();
                     
-                    const tomorrowDateString = data.daily.time[1];
-                    const [year, month, day] = tomorrowDateString.split('-');
-                    const dateObj = new Date(year, month - 1, day);
+                    // 根據 targetDayIndex (0或1) 抓出正確的日期字串
+                    const targetDateString = data.daily.time[targetDayIndex];
+                    const [year, month, day] = targetDateString.split('-');
+                    const dateObjForCard = new Date(year, month - 1, day);
                     
                     if (!displayDateStr) {
-                         displayDateStr = dateObj.toLocaleDateString('zh-TW', { month: 'long', day: 'numeric' });
-                         const weekday = WEEKDAY_NAMES[dateObj.getDay()];
+                         displayDateStr = dateObjForCard.toLocaleDateString('zh-TW', { month: 'long', day: 'numeric' });
+                         const weekday = WEEKDAY_NAMES[dateObjForCard.getDay()];
                          dateDisplay.textContent = `${displayDateStr} (週${weekday})`;
                     }
 
-                    const wInfo = getWeatherInfo(data.daily.weather_code[1]);
-                    const maxTemp = Math.round(data.daily.temperature_2m_max[1]);
-                    const minTemp = Math.round(data.daily.temperature_2m_min[1]);
-                    const rainProb = data.daily.precipitation_probability_max[1];
+                    // 取出目標日的天氣總覽
+                    const wInfo = getWeatherInfo(data.daily.weather_code[targetDayIndex]);
+                    const maxTemp = Math.round(data.daily.temperature_2m_max[targetDayIndex]);
+                    const minTemp = Math.round(data.daily.temperature_2m_min[targetDayIndex]);
+                    const rainProb = data.daily.precipitation_probability_max[targetDayIndex];
 
                     let rainStartHour = -1;
                     data.hourly.time.forEach((timeStr, index) => {
-                        if (timeStr.startsWith(tomorrowDateString)) {
+                        // 只抓取目標日期當天的每小時資料
+                        if (timeStr.startsWith(targetDateString)) {
                             const hour = parseInt(timeStr.split('T')[1].split(':')[0], 10);
                             const hRainProb = data.hourly.precipitation_probability[index];
                             const hCode = data.hourly.weather_code[index];
@@ -483,7 +486,7 @@
                     };
 
                     data.hourly.time.forEach((timeStr, index) => {
-                        if (timeStr.startsWith(tomorrowDateString)) {
+                        if (timeStr.startsWith(targetDateString)) {
                             const hour = parseInt(timeStr.split('T')[1].split(':')[0], 10);
                             if (hour >= 5 && hour <= 14) {
                                 const hTemp = data.hourly.temperature_2m[index];
@@ -503,16 +506,15 @@
                     
                     if (marketMinTemp === Infinity) marketMinTemp = minTemp;
                     if (marketMaxRainProb === -1) marketMaxRainProb = rainProb;
-                    if (maxSeverity === -1) worstWeatherCode = data.daily.weather_code[1];
+                    if (maxSeverity === -1) worstWeatherCode = data.daily.weather_code[targetDayIndex];
 
                     let riceHtml = '';
                     let dayTagHtml = ''; 
                     
                     if (loc.type === 'market') {
-                        // 加入小標籤讓您知道這個市場是固定星期幾去
                         dayTagHtml = `<span style="font-size: 0.85rem; color: #94a3b8; margin-left: 6px; font-weight: 600;">(週${WEEKDAY_NAMES[loc.scheduleDay]})</span>`;
                         
-                        const rice = getRiceSuggestion(worstWeatherCode, Math.round(marketMinTemp), marketMaxRainProb, dateObj);
+                        const rice = getRiceSuggestion(worstWeatherCode, Math.round(marketMinTemp), marketMaxRainProb, dateObjForCard);
                         riceHtml = `
                             <div class="rice-suggestion">
                                 <div class="rice-title">
@@ -531,7 +533,9 @@
                             
                             <div class="main-info">
                                 <div class="loc-title">
-                                    <h2><i data-lucide="map-pin" style="width: 18px; height: 18px; color: #ef4444;"></i> ${loc.name} ${dayTagHtml}</h2>
+                                    <a href="https://www.google.com/maps/search/?api=1&query=${loc.lat},${loc.lon}" target="_blank" style="text-decoration: none; color: inherit; cursor: pointer;" title="點擊在 Google 地圖查看精確位置">
+                                        <h2><i data-lucide="map-pin" style="width: 18px; height: 18px; color: #ef4444;"></i> ${loc.name} ${dayTagHtml}</h2>
+                                    </a>
                                     <div class="loc-desc">
                                         <i data-lucide="${wInfo.icon}" class="${wInfo.colorClass}" style="width: 20px; height: 20px;"></i> 
                                         ${wInfo.text}
@@ -554,7 +558,7 @@
                     if (loc.type === 'market') {
                         htmlOutput += `<div class="hourly-section">`;
                         data.hourly.time.forEach((timeStr, index) => {
-                            if (timeStr.startsWith(tomorrowDateString)) {
+                            if (timeStr.startsWith(targetDateString)) {
                                 const hour = parseInt(timeStr.split('T')[1].split(':')[0], 10);
                                 if (hour >= 5 && hour <= 14 && (hour - 5) % 2 === 0) {
                                     const temp = Math.round(data.hourly.temperature_2m[index]);
